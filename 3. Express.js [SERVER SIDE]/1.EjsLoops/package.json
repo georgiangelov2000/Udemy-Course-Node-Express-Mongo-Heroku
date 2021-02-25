@@ -1,0 +1,16 @@
+{
+  "name": "ejsloops",
+  "version": "1.0.0",
+  "description": "embedded-javascript-template",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "George Angelov",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  }
+}
