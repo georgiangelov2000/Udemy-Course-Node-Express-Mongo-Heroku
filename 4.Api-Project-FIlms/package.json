@@ -1,0 +1,16 @@
+{
+  "name": "api-project",
+  "version": "1.0.0",
+  "description": "api-project",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "George Angelov",
+  "license": "MIT",
+  "devDependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "request": "^2.88.2"
+  }
+}
