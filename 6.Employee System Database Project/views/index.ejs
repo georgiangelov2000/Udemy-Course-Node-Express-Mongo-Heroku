@@ -1,6 +1,7 @@
 <%- include('secondary/header') -%>
 
     <div class="container">
+      <h1 class="text-center">Table of Employees</h1>
         <table class="table">
             <thead>
               <tr>
@@ -11,12 +12,13 @@
               </tr>
             </thead>
             <tbody>
+             <% employees.forEach((employee)=>{ %>
               <tr>
-                <td>George</td>
-                <td>Manager</td>
-                <td>$10000</td>
+                <td><%= employee.name %></td>
+                <td><%= employee.designation %></td>
+                <td><%= employee.salary %></td>
                 <td>
-                    <a href="#" class="btn btn-primary">
+                    <a href="/update/<%= employee.id %>" class="btn btn-primary">
                         <span>Edit</span>
                     </a>
                     <a href="#" class="btn btn-danger">
@@ -24,6 +26,7 @@
                     </a>
                 </td>
               </tr>
+             <% }) %>
             </tbody>
           </table>
     </div>
