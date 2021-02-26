@@ -1,0 +1,33 @@
+<%- include('secondary/header') -%>
+
+    <div class="container">
+      <h1 class="text-center">Table of Employees</h1>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+             <% employees.forEach((employee)=>{ %>
+              <tr>
+                <td><%= employee.name %></td>
+                <td><%= employee.designation %></td>
+                <td><%= employee.salary %></td>
+                <td>
+                    <a href="/update/<%= employee.id %>" class="btn btn-primary">
+                        <span>Edit</span>
+                    </a>
+                    <a href="#" class="btn btn-danger">
+                        <span>Delete</span>
+                    </a>
+                </td>
+              </tr>
+             <% }) %>
+            </tbody>
+          </table>
+    </div>
+<%- include('secondary/footer') -%>
