@@ -85,4 +85,16 @@ router.put("/update/:id", (req, res) => {
     });
 });
 
+//Delete  Employee
+router.delete('/delete/:id',(req,res)=>{
+  const id= {_id:req.params.id}
+  Employee.findByIdAndDelete(id)
+  .then(employee=>{
+    res.redirect('/')
+  })
+  .catch(err=>{
+    console.log(err)
+  })
+})
+
 module.exports = router;
