@@ -90,7 +90,8 @@ router.delete('/delete/:id',(req,res)=>{
   const id= {_id:req.params.id}
   Employee.findByIdAndDelete(id)
   .then(employee=>{
-    res.redirect('/')
+    req.flash('success_message','Employee deleted succesfully.')
+    res.redirect('/');
   })
   .catch(err=>{
     console.log(err)
