@@ -9,7 +9,8 @@ router.get("/", (req, res) => {
       res.render("index", { employees: employees });
     })
     .catch((err) => {
-      console.log(err);
+      req.flash('error_message','ERROR:' +err)
+      res.redirect('/');
     });
 });
 
@@ -33,7 +34,8 @@ router.get("/employee", (req, res) => {
       res.render("search", { employee: employee });
     })
     .catch((err) => {
-      console.log(err);
+      req.flash('error_message','ERROR:' +err)
+      res.redirect('/');
     });
 });
 
@@ -45,7 +47,8 @@ router.get("/update/:id", (req, res) => {
       res.render("update-employee", { employee: employee });
     })
     .catch((err) => {
-      console.log(err);
+    req.flash('error_message','ERROR:' +err)
+    res.redirect('/');
     });
 });
 
@@ -58,10 +61,12 @@ router.post("/employee/add-employee", (req, res) => {
   };
   Employee.create(newEmployee)
     .then((employee) => {
+      req.flash('success_message','Employee data added to database successfully.')
       res.redirect("/");
     })
     .catch((err) => {
-      console.log(err);
+      req.flash('error_message','ERROR:' +err)
+      res.redirect('/');
     });
 });
 
@@ -78,10 +83,12 @@ router.put("/update/:id", (req, res) => {
     },
   })
     .then((employee) => {
+      req.flash('success_message','Employee data updated successfully')
       res.redirect("/");
     })
     .catch((err) => {
-      console.log(err);
+      req.flash('error_message','ERROR:' +err)
+      res.redirect('/');
     });
 });
 
@@ -94,7 +101,8 @@ router.delete('/delete/:id',(req,res)=>{
     res.redirect('/');
   })
   .catch(err=>{
-    console.log(err)
+    req.flash('error_message','ERROR:' +err)
+    res.redirect('/');
   })
 })
 
