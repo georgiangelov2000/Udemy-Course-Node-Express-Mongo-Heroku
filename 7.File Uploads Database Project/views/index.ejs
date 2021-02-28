@@ -12,16 +12,16 @@
     <h1 class="text-center">All Images</h1>
 
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <img src="..." class="img-fluid" alt="Responsive image">
-                <form action="">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button style="cursor: pointer;" type="submit"
-                        class="btn btn-danger float-none mx-4 px-5">Delete
-                    </button>
-                </form>
-            </div>
+        <div class="row m-auto">
+            <% images.forEach(image=> { %>
+                <div class="col-md-5">
+                    <img src="<%= image.imageUrl %>" class="img-fluid" alt="Responsive image">
+                    <form action="/delete/<%= image.id %>?_method=DELETE>">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger btn-block">Delete</button>
+                    </form>
+                </div>
+           <% }) %>
         </div>
     </div>
 </body>

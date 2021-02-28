@@ -5,6 +5,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const methodOverride = require("method-override");
+const { allowedNodeEnvironmentFlags } = require("process");
+const { url } = require("inspector");
 
 //Connect to database
 mongoose.connect("mongodb://localhost:27017/images", {
@@ -32,7 +34,9 @@ app.get("/upload", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.render("index");
+  Picture.find({}).then((images) => {
+    res.render("index", { images: images });
+  });
 });
 
 //Set Image Storage
@@ -42,7 +46,6 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-
 
 const upload = multer({
   storage: storage,
@@ -55,7 +58,7 @@ const upload = multer({
 function checkFileType(file, cb) {
   const fileTypes = /jpeg|jpg|png|gif/;
   const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
-  if (extname) {
+  if (extName) {
     return cb(null, true);
   } else {
     cb("Error:Please images only.");
@@ -68,21 +71,48 @@ app.post("/uploadsingle", upload.single("singleImage"), (req, res, next) => {
   if (!file) {
     return console.log("Please select an Image.");
   }
-  const url=file.path.replace('public','');
+  const url = file.path.replace("public", "");
 
-  Picture.findOne({imageUrl:url})
-  .then(img=>{
-      if(img){
-          console.log('Duplicate Images. Try Again!');
-          return res.redirect('/upload');
+  Picture.findOne({ imageUrl: url })
+    .then((img) => {
+      if (img) {
+        console.log("Duplicate Image. Try Again!");
+        return res.redirect("/upload");
       }
-      Picture.create({imageUrl:url})
-      .then(img=>{
-          console.log('Image saved to DATABASE.');
-          res.redirect('/')
-      })
-  })
+
+      Picture.create({ imageUrl: url }).then((img) => {
+        console.log("Image save to DB");
+        res.redirect("/");
+      });
+    })
+    .catch((err) => {
+      return console.log("Error" + err);
+    });
 });
+
+//POST Multiple Images
+app.post("/uploadmultiple",upload.array("multipleImages"),
+  (req, res, next) => {
+    const files = req.files;
+    if (!files) {
+      return console.log("Please select images.");
+    }
+    files.forEach((files) => {
+      const url = file.path.replace("public", "");
+      Picture.findOne({imageUrl:url})
+      .then(async img=>{
+        if(img){
+          return console.log('Duplicate Image.');
+        }
+        await Picture.create({imageUrl:url});
+      })
+      .catch(err=>{
+        return console.log('Error:' +err)
+      })
+    });
+    res.redirect('/')
+  }
+);
 
 app.listen(3000, () => {
   console.log("Server is started on port 3000.");
