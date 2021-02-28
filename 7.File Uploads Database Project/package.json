@@ -1,0 +1,17 @@
+{
+  "name": "file-uploads",
+  "version": "1.0.0",
+  "description": "file-uploads-database",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "George Angelov",
+  "license": "MIT",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.11.18",
+    "multer": "^1.4.2"
+  }
+}
