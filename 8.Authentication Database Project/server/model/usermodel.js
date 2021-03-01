@@ -1,4 +1,5 @@
 const mongoose=require('mongoose');
+const passportLocalMongoose=require('passport-local-mongoose');
 
 const userScheme=new mongoose.Schema({
     name:String,
@@ -9,4 +10,5 @@ const userScheme=new mongoose.Schema({
     }
 });
 
+userScheme.plugin(passportLocalMongoose,{usernameField:'email'});
 module.exports=mongoose.model('User',userScheme);

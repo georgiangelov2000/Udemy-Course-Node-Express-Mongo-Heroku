@@ -8,9 +8,14 @@ const dotEnv=require('dotenv');
 const mongoose=require('mongoose');
 const flash=require('connect-flash');
 const session=require('express-session')
+const passport=require('passport');
+const LocalStrategy=require('passport-local').Strategy;
 
 //requiring router
 const router=require('./server/routes/router');
+
+//Requiring user model
+const User=require('./server/model/usermodel')
 
 //Env File
 dotEnv.config({path:'./config.env'});
@@ -19,15 +24,23 @@ dotEnv.config({path:'./config.env'});
 mongoose.connect(process.env.DB_LOCAL,{
     useNewUrlParser:true,
     useCreateIndex:true,
-    useCreateIndex:true
+    useCreateIndex:true,
+    useUnifiedTopology: true
 });
 
-//middleware for session
+//middleware  session
 app.use(session({
 secret:'Authentication Project',
 resave:true,
 saveUninitialized:true
 }));
+
+//middleware  passport
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy({usernameField:'email'},User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //middleware flash messages
 app.use(flash());
