@@ -5,8 +5,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const methodOverride = require("method-override");
-const { allowedNodeEnvironmentFlags } = require("process");
-const { url } = require("inspector");
+const fs=require('fs');
+
 
 //Connect to database
 mongoose.connect("mongodb://localhost:27017/images", {
@@ -97,22 +97,41 @@ app.post("/uploadmultiple",upload.array("multipleImages"),
     if (!files) {
       return console.log("Please select images.");
     }
-    files.forEach((files) => {
+    files.forEach((file) => {
       const url = file.path.replace("public", "");
-      Picture.findOne({imageUrl:url})
-      .then(async img=>{
-        if(img){
-          return console.log('Duplicate Image.');
-        }
-        await Picture.create({imageUrl:url});
-      })
-      .catch(err=>{
-        return console.log('Error:' +err)
-      })
+      Picture.findOne({ imageUrl: url })
+        .then(async (img) => {
+          if (img) {
+            return console.log("Duplicate Image.");
+          }
+          await Picture.create({ imageUrl: url });
+        })
+        .catch((err) => {
+          return console.log("Error:" + err);
+        });
     });
-    res.redirect('/')
+    res.redirect("/");
   }
 );
+
+//Delete Picture from Database
+app.delete('/delete/:id',(req,res)=>{
+  const serachQuery={_id : req.params.id};
+
+  Picture.findOne(serachQuery)
+  .then(image=>{
+    fs.unlink(__dirname+'/public/'+image.imageUrl,(err)=>{
+      if(err) return console.log(err);
+      Picture.deleteOne(serachQuery)
+      .then(img=>{
+        res.redirect('/');
+      })
+    })
+    .catch(err=>{
+      console.log(err);
+    });
+  });
+});
 
 app.listen(3000, () => {
   console.log("Server is started on port 3000.");

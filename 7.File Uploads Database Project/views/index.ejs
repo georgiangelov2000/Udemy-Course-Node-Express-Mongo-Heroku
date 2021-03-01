@@ -14,9 +14,9 @@
     <div class="container">
         <div class="row m-auto">
             <% images.forEach(image=> { %>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <img src="<%= image.imageUrl %>" class="img-fluid" alt="Responsive image">
-                    <form action="/delete/<%= image.id %>?_method=DELETE>">
+                    <form action="/delete/<%= image.id %>?_method=DELETE" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="btn btn-danger btn-block">Delete</button>
                     </form>
