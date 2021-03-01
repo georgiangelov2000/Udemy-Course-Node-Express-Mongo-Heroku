@@ -10,19 +10,24 @@
 <body>
 
     <h1 class="text-center">All Images</h1>
-
-    <div class="container">
-        <div class="row m-auto">
-            <% images.forEach(image=> { %>
-                <div class="col-md-3">
-                    <img src="<%= image.imageUrl %>" class="img-fluid" alt="Responsive image">
-                    <form action="/delete/<%= image.id %>?_method=DELETE" method="POST">
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand text-center m-auto" href="/upload">Go to Upload File</a>
+      </nav>
+        <div class="container w-75">
+            <div class="row">
+                <% images.forEach(image => { %>
+                <div class="col-4">
+                    <img style="border: 3px solid grey;" class="mx-4 my-3 p-1" height="250" width="250" src="<%= image.imageUrl %>">
+                    <form style="display: inline;" action="/delete/<%= image.id %>?_method=DELETE" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger btn-block">Delete</button>
+                        <button style="cursor: pointer;" type="submit"
+                            class="btn btn-danger float-none mx-4 px-5">Delete</button>
                     </form>
+    
                 </div>
-           <% }) %>
+                <% }) %>
+    
+            </div>
         </div>
-    </div>
 </body>
 </html>
