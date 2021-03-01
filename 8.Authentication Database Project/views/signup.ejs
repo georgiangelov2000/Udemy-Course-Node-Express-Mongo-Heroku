@@ -1,6 +1,11 @@
 <%- include('partials/header') -%>
 <div class="container">
+    <h1 class="text-center">Sign Up</h1>
 <form action="/signup" method="POST">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
+    </div>
     <div class="form-group">
       <label for="password">Email address</label>
       <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -11,5 +16,6 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+  <a href="/login" class="text-success">Back to Login</a>
 </div>
 <%- include('partials/footer') -%>

@@ -10,7 +10,7 @@ const flash=require('connect-flash');
 const session=require('express-session')
 
 //requiring router
-const router=require('./routes/router');
+const router=require('./server/routes/router');
 
 //Env File
 dotEnv.config({path:'./config.env'});
