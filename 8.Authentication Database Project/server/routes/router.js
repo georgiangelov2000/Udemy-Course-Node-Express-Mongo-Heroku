@@ -16,10 +16,6 @@ function isAuthenticatedUser(req,res,next){
     res.redirect('/login')
 };
 
-router.get('/forgot',(req,res)=>{
-    res.render('forgot')
-});
-
 //Get Routes
 router.get('/login',(req,res)=>{
     res.render('login')
@@ -37,6 +33,28 @@ router.get('/logout',(req,res)=>{
     req.logOut();
     req.flash('success_msg','You have been logged out');
     res.redirect('/login')
+});
+
+router.get('/forgot',(req,res)=>{
+    res.render('forgot')
+});
+
+//reset password of the current User
+router.get('/reset/:token',(req,res)=>{
+    User.findOne({resetPasswordToken:req.params.token, resetPasswordExpires: {$gt : Date.now() } })
+    .then(user=>{
+        if(!user){
+            req.flash('error_msg','Password reset token is invalid or has been expired.');
+            res.redirect('/forgot');
+        }
+        res.render('newpassword',{
+            token:req.params.token
+        });
+    })
+    .catch(error=>{
+        req.flash('error_msg','Error:'+error)
+        res.redirect('/forgot');
+    })
 });
 
 //Post Routes
@@ -109,7 +127,7 @@ router.post('/forgot',(req,res,next)=>{
             });
             let mailOptions= {
                 to:user.email,
-                from:'George Angelov stu190132112@uni-plovdiv.com',
+                from:'George Angelov georgebelozemeca@gmail.com',
                 subject:'Recovery Email from Auth Project',
                 text : 'Please click the following link to recover your passoword: \n\n'+
                 'http://'+ req.headers.host +'/reset/'+token+'\n\n'+
