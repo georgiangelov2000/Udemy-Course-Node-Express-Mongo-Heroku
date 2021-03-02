@@ -4,7 +4,7 @@
     <%- include('partials/messages') -%>
 <form action="/login" method="POST">
     <div class="form-group">
-      <label for="password">Email address</label>
+      <label for="email">Email address</label>
       <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
     </div>
     <div class="form-group">
@@ -13,6 +13,14 @@
     </div>
     <button type="submit" class="btn btn-primary">Login</button>
   </form>
-  <a href="/signup" class="text-success">Sign up</a>
+  <div class="row">
+    <div class="col-md-12">
+    <a href="/signup" class="text-success">Sign up</a>
+  </div>
+  <div class="col-md-12">
+    <a href="/forgot" class="text-danger">Forgot Pasword ?</a>
+  </div>
+  </div>
+
 </div>
 <%- include('partials/footer') -%>

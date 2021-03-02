@@ -1,0 +1,19 @@
+<%- include('partials/header') -%>
+
+<div class="container">
+    <%- include('partials/messages') -%>
+  <form action="/forgot" method="POST">
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Send Email</button>
+  </form>
+  <div class="row">
+    <div class="col-md-12">
+      <a href="/login" class="text-danger">Back To Login ?</a>
+    </div>
+  </div>
+</div>
+<%- include('partials/footer') -%>
+
