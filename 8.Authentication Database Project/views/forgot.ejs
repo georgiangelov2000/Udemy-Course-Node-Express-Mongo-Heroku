@@ -1,13 +1,14 @@
 <%- include('partials/header') -%>
 
 <div class="container">
-    <%- include('partials/messages') -%>
-  <form action="/forgot" method="POST">
+  <h1 class="text-center">Forgot Password</h1>
+  <%- include('partials/messages') -%>
+  <form action="/forgot" method="POST" class="mb-2">
     <div class="form-group">
       <label for="email">Email address</label>
       <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email"/>
     </div>
-    <button type="submit" class="btn btn-primary">Send Email</button>
+    <button type="submit" class="btn btn-primary btn-block">Send Email</button>
   </form>
   <div class="row">
     <div class="col-md-12">

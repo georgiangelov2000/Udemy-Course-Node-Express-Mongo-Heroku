@@ -2,7 +2,7 @@
 <div class="container">
     <h1 class="text-center">Login</h1>
     <%- include('partials/messages') -%>
-<form action="/login" method="POST">
+<form action="/login" method="POST" class="mb-4">
     <div class="form-group">
       <label for="email">Email address</label>
       <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -11,13 +11,13 @@
       <label for="password">Password</label>
       <input type="password" class="form-control" id="password" name="password" placeholder="Password">
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary btn-block">Login</button>
   </form>
-  <div class="row">
-    <div class="col-md-12">
+  <div class="row m-auto text-center">
+    <div class="col-md-6">
     <a href="/signup" class="text-success">Sign up</a>
   </div>
-  <div class="col-md-12">
+  <div class="col-md-6">
     <a href="/forgot" class="text-danger">Forgot Pasword ?</a>
   </div>
   </div>
