@@ -29,7 +29,7 @@ router.get('/dashboard',isAuthenticatedUser,(req,res)=>{
     res.render('dashboard')
 });
 
-router.get('/logout',(req,res)=>{
+router.get('/logout',isAuthenticatedUser,(req,res)=>{
     req.logOut();
     req.flash('success_msg','You have been logged out');
     res.redirect('/login')
@@ -37,6 +37,10 @@ router.get('/logout',(req,res)=>{
 
 router.get('/forgot',(req,res)=>{
     res.render('forgot')
+});
+
+router.get('/password/change',isAuthenticatedUser,(req,res)=>{
+    res.render('changepassword')
 });
 
 //reset password of the current User
@@ -142,5 +146,81 @@ router.post('/forgot',(req,res,next)=>{
         if(error) res.redirect('/forgot');
     });
 });
+
+//Reset forgot password
+router.post('/reset/:token',(req,res)=>{
+async.waterfall([
+    (done)=>{
+        User.findOne({resetPasswordToken:req.params.token, resetPasswordExpires: {$gt : Date.now() } })
+        .then(user=>{
+            if(!user){
+                req.flash('error_msg','Password reset token is invalid or has been expired.');
+                res.redirect('/forgot');
+            }
+            if(req.body.password !== req.body.confirmpassword){
+                req.flash('error_msg',"Password don't match.");
+                return res.redirect('/forgot')
+            }
+            user.setPassword(req.body.password,error=>{
+                user.resetPasswordToken=undefined;
+                user.resetPasswordExpires=undefined;
+
+                user.save(error=>{
+                    req.logIn(user,error=>{
+                        done(user, error);
+                    })
+                });
+            });
+        })
+        .catch(error=>{
+            req.flash('error_msg','Error:'+error);
+            res.redirect('/forgot')
+        });
+    },
+    (user)=>{
+        let smtpTransport=nodemailer.createTransport({
+            service:'Gmail',
+            auth:{
+                user:process.env.GMAIL_EMAIL,
+                pass:process.env.GMAIL_PASSWORD
+            }
+        });
+        let mailOptions={
+            to:user.email,
+            from:'George Angelov georgebelozemeca@gmail.com',
+            subject:'Your Password is changed.',
+            text:`Hello, ${user.name}\n\n This is the confirmation email that the password for your account ${user.email} has been changed . `
+        };
+        smtpTransport.sendMail(mailOptions,error=>{
+            req.flash('success_msg', 'Your password has been changed successfully.');
+            res.redirect('/login');
+        });
+    }
+],error=>{
+    res.redirect('/login')
+    });
+});
+
+// change password
+router.post('password/change',(req,res)=>{
+    if(req.body.password!==req.body.confirmpassword){
+        req.flash('error_msg','Password dont match. Try again.');
+       return res.redirect('/password/change')
+    }
+    User.findOne({email:req.user.email})
+    .then(user=>{
+        user.setPassword(req.body.password,err=>{
+            user.save()
+            .then(user=>{
+                req.flash('success_msg','Password chanded succesfully/');
+                res.redirect('/dashboard');
+            })
+            .catch(error=>{
+                req.flash('error_msg','Error:'+error)
+                res.redirect('/password/change');
+            });
+        });
+    });
+})
 
 module.exports=router;
