@@ -1,6 +1,7 @@
 const mongoose=require('mongoose');
 const passportLocalMongoose=require('passport-local-mongoose');
 
+//create UserScheme
 const userScheme=new mongoose.Schema({
     name:String,
     email:String,
