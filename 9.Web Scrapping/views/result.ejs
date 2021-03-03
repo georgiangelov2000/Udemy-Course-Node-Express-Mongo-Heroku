@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+ <% if(data){ %>
+    <div class="container mt-5">
+      <h1 class="text-center">Result -> <%= data["title"]%> </h1>
+      <div class="card m-auto" style="width: 50rem;">
+        <div class="card-body">
+            <h5 class="card-title"> <%= data["title"]%> </h5>
+            <p> <%= data["releaseDate"]%> </p>
+            <h6 class="card-subtitle mb-2 text-muted">Overview</h6>
+            <p class="card-text"> <%= data["overview"]%> </p>
+            <p class="card-text ">User Score : <%= data["userScore"]%> </p>
+            <p class="card-text ">Featured Team:</p>
+            <% data["crew"].forEach((crew)=> { %>
+              <p>
+                  <b><%= crew.name %></b> (<%= crew.role %>)
+              </p>
+          <% }); %>  
+          </div>
+        </div>
+  </div>
+  <%  } else { %>
+    <h1 class="text-center">Not Found Please Try Again latter !</h1>
+    <%  } %>
+
+</body>
+</html>
