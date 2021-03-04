@@ -1,29 +1,31 @@
-
-<!-- <%- include('../partials/header') -%>
+<%- include('../partials/header') -%>
 
 <div class="container">
-  <h1 class="text-center">Update</h1>
-    <form action="/uploadProduct" enctype="multipart/form-data" method="POST">
-        <div class="form-group">
-            <input name="singleImage" type="file" class="custom-file-input"">
-              <label class=" custom-file-label" for="customFile">Choose Image</label>
-        </div>
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" id="name"  name="name" placeholder="Enter name">
-        </div>
-        <div class="form-group">
-          <label for="designation">Description</label>
-          <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
-        </div>
-        <div class="form-group">
-            <label for="price">Price</label>
-            <input type="text" class="form-control" id="price" name="price" placeholder="price">
-          </div>
-        <button type="submit" class="btn btn-primary  btn-lg btn-block ">Submit</button>
-    </form>
+  <h1 class="text-center">Update file</h1>
+<form action="">
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Upload</span>
+    </div>
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="inputGroupFile01">
+      <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name"  name="name" placeholder="Enter name">
+  </div>
+  <div class="form-group">
+    <label for="designation">Description</label>
+    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+  </div>
+  <div class="form-group">
+      <label for="price">Price</label>
+      <input type="text" class="form-control" id="price" name="price" placeholder="price">
+    </div>
+  <button type="submit" class="btn btn-primary  btn-lg btn-block ">Submit</button>
+</form>
 </div>
-
 <%- include('../partials/footer') -%>
-
---->
