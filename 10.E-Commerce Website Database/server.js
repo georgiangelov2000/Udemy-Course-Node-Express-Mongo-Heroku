@@ -12,6 +12,7 @@ const localStrategy=require('passport-local').Strategy;
 
 //Router
 const router=require('./functionality/routes/router');
+const DashboardRouter=require('./functionality/routes/dashboard-router');
 
 //User
 const User=require('./functionality/models/usermodel')
@@ -44,7 +45,7 @@ passport.deserializeUser(User.deserializeUser());
 //Middleware flash messages
 app.use(flash());
 
-//setting middlware globally
+//Setting middelware globally
 app.use((req, res, next)=> {
     res.locals.success_msg = req.flash(('success_msg'));
     res.locals.error_msg = req.flash(('error_msg'));
@@ -64,6 +65,7 @@ app.set('view engine','ejs')
 
 //Middleware router
 app.use(router)
+app.use(DashboardRouter)
 
 app.listen(process.env.PORT,()=>{
     console.log('Server is started');

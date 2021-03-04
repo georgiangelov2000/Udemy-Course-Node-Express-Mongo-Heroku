@@ -1,21 +1,94 @@
 <%- include('./partials/header') -%>
-
 <div class="container">
-    <%- include('partials/messages') -%>
-<div class="row">
-    <div class="col-xl-12 col-sm-12 mb-3">
-        <div class="card text-white bg-primary o-hidden h-100">
+
+    <div class="row">
+        <div class="col-xl-12 col-sm-12 ">
+            <div class="cart-body text-white p-3 bg-primary text-center rounded">
+                Total Products
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-2 col-sm-2">
+            <%- include('partials/sidebar') -%>
+        </div>
+        <div class="col-xl-10 col-sm-10 d-flex flex-wrap flex-wrap align-items-center">
+        <div class="col-xl-6 col-sm-6 text-center">
             <div class="card-body">
-                <div class="text-center card-font-size">
-                    Total Products
+                <div class="cart-body text-white p-3 bg-success text-center rounded">
+                    In Stock
                 </div>
             </div>
+            <a href="#">
+                View Details
+            </a>
+        </div>
+        <div class="col-xl-6 col-sm-6 text-center">
+            <div class="card-body">
+                <div class="cart-body text-white p-3 bg-warning text-center rounded">
+                    Out of Stock
+                </div>
+            </div>
+            <a href="#">
+                View Details
+            </a>
+        </div>
+        <div class="col-xl-6 col-sm-6 text-center">
+            <div class="card-body">
+                <div class="cart-body text-white p-3 bg-danger text-center rounded">
+                    Price Changed
+                </div>
+            </div>
+            <a href="#">
+                View Details
+            </a>
+        </div>
+        <div class="col-xl-6 col-sm-6 text-center">
+            <div class="card-body">
+                <div class="cart-body text-white p-3 bg-dark text-center rounded">
+                    Back in Stock
+                </div>
+            </div>
+            <a href="#">
+                View Details
+            </a>
         </div>
     </div>
 </div>
 
+</div>
 
-<!--CARD START HERE-->
+<%- include('./partials/footer') -%>
+
+
+
+
+
+<!--
+<div class="container">
+    <%- include('partials/messages') -%>
+    <div class="row">
+        <div class="col-xl-12 col-sm-12">
+            <%- include('partials/sidebar') -%>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="row">
+            <div class="col-xl-12 col-sm-12 mb-3">
+                <div class="card text-white bg-primary o-hidden h-100">
+                    <div class="card-body">
+                        <div class="text-center card-font-size">
+                            Total Products
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 <div class="row">
     <div class="col-xl-3 col-sm-6 mb-3">
         <div class="card text-white bg-success o-hidden h-100">
@@ -35,7 +108,6 @@
         </div>
     </div>
 
-    <!--OUT OF STOCK-->
 
     <div class="col-xl-3 col-sm-6 mb-3">
         <div class="card text-white bg-danger o-hidden h-100">
@@ -53,7 +125,6 @@
         </div>
     </div>
 
-        <!--PRICE CHANGED-->
 
     <div class="col-xl-3 col-sm-6 mb-3">
         <div class="card text-white bg-info o-hidden h-100">
@@ -71,7 +142,6 @@
         </div>
     </div>
 
-            <!--BACK IN STOCK-->
 
     <div class="col-xl-3 col-sm-6 mb-3">
         <div class="card text-white bg-warning o-hidden h-100">
@@ -90,7 +160,14 @@
     </div>
 </div>
 
- <!-- UPDATE CARD START HERE -->
+
+    </div>
+
+
+
+
+
+
 
  <h1 class="my-5">Products Update Information</h1>
 
@@ -131,6 +208,4 @@
          </div>
      </div>
 </div>
-</div>
-
-<%- include('./partials/footer') -%>
+-->
