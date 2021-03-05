@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+const multer=require('multer')
+let upload=multer({dest:'upload'})
+
 const Product=require('../models/productmodel');
 
 // Checks if user is authenticated
@@ -14,20 +17,20 @@ function isAuthenticatedUser(req, res, next) {
 
 //Get Routes
 
-//Rendering Employee
-router.get("/product/instock", (req, res) => {
+//Rendering Products
+router.get("/product/instock",isAuthenticatedUser,(req, res) => {
     Product.find({})
       .then((products) => {
         res.render("admin-dashboard/instock", { products: products });
       })
       .catch((err) => {
-        req.flash('error_message','ERROR:' +err)
+        req.flash('error_msg','ERROR:' +err)
         res.redirect('/dashboard');
       });
   });
 
 //Router to Update Form
-router.get("/product/update/:id", (req, res) => {
+router.get("/product/update/:id",isAuthenticatedUser, (req, res) => {
     const searchQuery = { _id: req.params.id };
     Product.findOne(searchQuery)
       .then((product) => {
@@ -48,33 +51,35 @@ router.get('/product/update',isAuthenticatedUser,(req,res)=>{
 router.get('/product/instock',isAuthenticatedUser,(req,res)=>{
     res.render('admin-dashboard/instock')
 })
-
-
+router.get('/products/myproducts',(req,res)=>{
+  res.render('admin-dashboard/admin-products/myproducts')
+})
 
 //Post Routes
+
 router.post('/product/new',(req,res)=>{
-    const newProduct={
-        imageUrl: req.body.imageUrl,
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price
-    };
-    Product.create(newProduct)
-    .then((product)=>{
-        req.flash('success_msg','Product data added to database successfully.')
-        res.redirect('/dashboard')
-    })
-    .catch((error)=>{
-        req.flash('error_msg','Error:'+error)
-        res.redirect('/product/new')
-    })
+  const newProduct={
+      imageUrl: req.body.imageUrl,
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price
+  };
+  Product.create(newProduct)
+  .then((product)=>{
+      req.flash('success_msg','Product data added to database successfully.')
+      res.redirect('/dashboard')
+  })
+  .catch((error)=>{
+      req.flash('error_msg','Error:'+error)
+      res.redirect('/product/new')
+  })
 })
 
 router.put("/product/update/:id", (req, res) => {
     const searchQuery = { _id: req.params.id };
   
     Product.updateOne(searchQuery, {
-      $set: {
+      $set: {     
         imageUrl: req.body.imageUrl,
         name: req.body.name,
         description: req.body.description,
@@ -99,7 +104,7 @@ router.put("/product/update/:id", (req, res) => {
       res.redirect('/dashboard');
     })
     .catch(error=>{
-      req.flash('error_message','ERROR:' +error)
+      req.flash('error_msg','ERROR:' +error)
       res.redirect('/dashboard');
     })
   })
@@ -108,3 +113,25 @@ router.put("/product/update/:id", (req, res) => {
 module.exports = router
 
 
+
+
+/*
+router.post('/product/new',upload.single('singleImage'),(req,res,next)=>{
+  
+  const newProduct={
+      imageUrl: req.body.imageUrl,
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price
+  };
+  Product.create(newProduct)
+  .then((product)=>{
+      req.flash('success_msg','Product data added to database successfully.')
+      res.redirect('/dashboard')
+  })
+  .catch((error)=>{
+      req.flash('error_msg','Error:'+error)
+      res.redirect('/product/new')
+  })
+})
+*/
