@@ -17,10 +17,10 @@ router.get('/product/instock',(req,res)=>{
 //Post Routes
 router.post('/product/new',(req,res)=>{
     const newProduct={
-        image:req.body.imageUrl,
+        imageUrl: req.body.imageUrl,
         name: req.body.name,
-        description:req.body.description,
-        price:req.body.price
+        description: req.body.description,
+        price: req.body.price
     };
     Product.create(newProduct)
     .then((product)=>{
@@ -29,7 +29,7 @@ router.post('/product/new',(req,res)=>{
     })
     .catch((error)=>{
         req.flash('error_msg','Error:'+error)
-        res.redirect('/newproduct')
+        res.redirect('/product/new')
     })
 })
 
