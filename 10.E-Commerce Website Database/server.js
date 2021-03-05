@@ -9,6 +9,11 @@ const session=require('express-session')
 const flash=require('connect-flash');
 const bodyParser=require('body-parser');
 const localStrategy=require('passport-local').Strategy;
+const methodOverride = require('method-override');
+
+//Setting up bodyparser
+app.use(bodyParser.urlencoded({ extended: false }))
+
 
 //Router
 const router=require('./functionality/routes/router');
@@ -54,8 +59,8 @@ app.use((req, res, next)=> {
     next();
 });
 
-//Setting up bodyparser
-app.use(bodyParser.urlencoded({extended:true}));
+//Overrride Method
+app.use(methodOverride('_method'));
 
 //Path
 app.set('views',path.join(__dirname,'views'));
