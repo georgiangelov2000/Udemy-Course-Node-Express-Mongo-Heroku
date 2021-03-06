@@ -2,10 +2,19 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/productmodel");
 
+// Checks if user is authenticated
+function isAuthenticatedUser(req, res, next) {
+  if(req.isAuthenticated()) {
+      return next();
+  }
+  req.flash('error_msg', 'Please Login first to access this page.')
+  res.redirect('/login');
+}
+
 //Get Routes
 
 //Rendering Products
-router.get("/product/instock", isAuthenticatedUser, (req, res) => {
+router.get("/product/instock",isAuthenticatedUser, (req, res) => {
   Product.find({})
     .then((products) => {
       res.render("admin-dashboard/instock", { products: products });
@@ -15,6 +24,17 @@ router.get("/product/instock", isAuthenticatedUser, (req, res) => {
       res.redirect("/dashboard");
     });
 });
+
+router.get('/dashboard',(req,res)=>{
+  Product.find({})
+  .then((products) => {
+    res.render("dashboard", { products: products });
+  })
+  .catch((err) => {
+    req.flash("error_msg", "ERROR:" + err);
+    res.redirect("/dashboard");
+  });
+})
 
 //Router to Update Form
 router.get("/product/update/:id", isAuthenticatedUser, (req, res) => {
@@ -97,21 +117,3 @@ router.delete("/product/delete/:id", (req, res) => {
 });
 
 module.exports = router;
-
-/*
-  const newProduct = {
-    imageUrl:req.body.imageUrl,
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-  };
-  Product.create(newProduct)
-    .then((product) => {
-      req.flash("success_msg", "Product data added to database successfully.");
-      res.redirect("/dashboard");
-    })
-    .catch((error) => {
-      req.flash("error_msg", "Error:" + error);
-      res.redirect("/product/new");
-    });
-    */

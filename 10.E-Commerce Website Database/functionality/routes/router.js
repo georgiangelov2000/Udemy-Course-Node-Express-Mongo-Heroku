@@ -25,10 +25,6 @@ router.get('/login',(req,res)=>{
     res.render('login')
 })
 
-router.get('/dashboard',isAuthenticatedUser,(req,res)=>{
-    res.render('dashboard')
-})
-
 router.get('/signup',(req,res)=>{
     res.render('signup')
 })
@@ -44,7 +40,7 @@ router.get('/forgotpassword',(req,res)=>{
 })
 
 //reset password of the current User
-router.get("/reset/:token", (req, res) => {
+router.get("/reset/:token",isAuthenticatedUser, (req, res) => {
   User.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() },
