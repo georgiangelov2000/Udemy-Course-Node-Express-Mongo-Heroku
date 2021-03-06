@@ -18,6 +18,7 @@
                 <% images.forEach(image => { %>
                 <div class="col-md-5 m-auto text-center">
                     <img style="border: 3px solid grey;" class="mx-4 my-3 p-1" height="250" width="250" src="<%= image.imageUrl %>">
+                    <p> <%= image.description %> </p>
                     <form style="display: inline;" action="/delete/<%= image.id %>?_method=DELETE" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
                         <button style="cursor: pointer;" type="submit"

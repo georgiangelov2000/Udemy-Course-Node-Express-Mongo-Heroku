@@ -17,6 +17,7 @@ mongoose.connect("mongodb://localhost:27017/images", {
 //Create  Schema
 let imageScheme = mongoose.Schema({
   imageUrl: String,
+  description:String,
 });
 
 //Create model
@@ -71,20 +72,21 @@ function checkFileType(file, cb) {
 //Create Collection and Save to DB
 app.post("/uploadsingle", upload.single("singleImage"), (req, res, next) => {
   const file = req.file;
+  const description=req.body.description
   if (!file) {
     return console.log("Please select an Image.");
   }
   
   let url = file.path.replace("public", "");
 
-  Picture.findOne({ imageUrl: url })
+  Picture.findOne({ imageUrl: url, description:description })
     .then(img => {
       if (img) {
         console.log("Duplicate Image. Try Again!");
         return res.redirect("/upload");
       }
 
-      Picture.create({ imageUrl: url })
+      Picture.create({ imageUrl: url , description:description })
       .then(img => {
         console.log('Image save to DB.')
         res.redirect("/");
