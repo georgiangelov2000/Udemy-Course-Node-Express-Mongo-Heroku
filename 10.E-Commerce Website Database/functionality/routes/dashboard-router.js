@@ -1,6 +1,32 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/productmodel");
+const multer=require('multer')
+
+//Set Image storage
+let storage = multer.diskStorage({
+  destination: "./public/uploads/images/",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+let upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    checkFileType(file, cb);
+  },
+});
+//Check File
+function checkFileType(file, cb) {
+  const fileTypes = /jpeg|jpg|png|gif/;
+  const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+  
+  if (extName) {
+    return cb(null, true);
+  } else {
+    cb("Error:Please images only.");
+  };
+};
 
 // Checks if user is authenticated
 function isAuthenticatedUser(req, res, next) {
@@ -53,9 +79,11 @@ router.get("/products/myproducts", (req, res) => {
 
 //Post Routes
 
-router.post("/product/new",(req, res) => {
+router.post("/product/new",upload.single('imageUrl'),(req, res,next) => {
+  const file = req.file;
+  let url = file.path.replace("public", "");
   const newProduct = {
-    imageUrl: req.body.imageUrl,
+    imageUrl:url,
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
