@@ -1,41 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/productmodel");
-const multer=require('multer')
-
-//Set Image storage
-let storage = multer.diskStorage({
-  destination: "./public/uploads/images/",
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-let upload = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    checkFileType(file, cb);
-  },
-});
-//Check File
-function checkFileType(file, cb) {
-  const fileTypes = /jpeg|jpg|png|gif/;
-  const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
-  
-  if (extName) {
-    return cb(null, true);
-  } else {
-    cb("Error:Please images only.");
-  };
-};
-
-// Checks if user is authenticated
-function isAuthenticatedUser(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  req.flash("error_msg", "Please Login first to access this page.");
-  res.redirect("/login");
-}
 
 //Get Routes
 
@@ -64,7 +29,7 @@ router.get("/product/update/:id", isAuthenticatedUser, (req, res) => {
     });
 });
 
-router.get("/product/new", isAuthenticatedUser, (req, res) => {
+router.get("/product/new",isAuthenticatedUser, (req, res) => {
   res.render("admin-dashboard/newproduct");
 });
 router.get("/product/update", isAuthenticatedUser, (req, res) => {
@@ -79,11 +44,9 @@ router.get("/products/myproducts", (req, res) => {
 
 //Post Routes
 
-router.post("/product/new",upload.single('imageUrl'),(req, res,next) => {
-  const file = req.file;
-  let url = file.path.replace("public", "");
+router.post("/product/new",(req, res,) => {
   const newProduct = {
-    imageUrl:url,
+    imageUrl:req.body.imageUrl,
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
@@ -135,3 +98,20 @@ router.delete("/product/delete/:id", (req, res) => {
 
 module.exports = router;
 
+/*
+  const newProduct = {
+    imageUrl:req.body.imageUrl,
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+  };
+  Product.create(newProduct)
+    .then((product) => {
+      req.flash("success_msg", "Product data added to database successfully.");
+      res.redirect("/dashboard");
+    })
+    .catch((error) => {
+      req.flash("error_msg", "Error:" + error);
+      res.redirect("/product/new");
+    });
+    */
