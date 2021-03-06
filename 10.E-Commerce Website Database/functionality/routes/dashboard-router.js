@@ -25,7 +25,10 @@ router.get("/product/instock",isAuthenticatedUser, (req, res) => {
     });
 });
 
-router.get('/dashboard',(req,res)=>{
+//Router to Search Form
+
+//Rendering Product in Dashboard
+router.get('/dashboard',isAuthenticatedUser,(req,res)=>{
   Product.find({})
   .then((products) => {
     res.render("dashboard", { products: products });
@@ -46,6 +49,26 @@ router.get("/product/update/:id", isAuthenticatedUser, (req, res) => {
     .catch((error) => {
       req.flash("error_msg", "ERROR:" + error);
       res.redirect("/dashboard");
+    });
+});
+
+//
+router.get('/search/product',isAuthenticatedUser,(req,res)=>{
+  res.render('admin-dashboard/search',{product: ""});
+})
+
+
+//Get current product
+router.get("/search",isAuthenticatedUser, (req, res) => {
+  const searchQuery = { name: req.query.name };
+
+  Product.findOne(searchQuery)
+    .then((product) => {
+      res.render("admin-dashboard/search", { product: product });
+    })
+    .catch((err) => {
+      req.flash('error_msg','ERROR:' +err)
+      res.redirect('/dashboard');
     });
 });
 

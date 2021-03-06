@@ -1,4 +1,7 @@
-<form action="/search/product" method="GET" class="mb-2 w-100">
+<%- include('../partials/header') -%>
+
+<div class="container col-xl-6 col-md-6 col-sm-6">
+<form action="/search" method="GET" class="mb-2 w-100">
   <h1 class="text-center">Search System</h1>
   <div class="form-group">
     <input type="text" class="form-control" id="name" name="name" placeholder="Enter Search"
@@ -6,3 +9,50 @@
   </div>
   <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
 </form>
+
+<% if(product) { %>
+  <table
+        class="table table-bordered"
+        id="dataTable"
+        width="100%"
+        cellspacing="0"
+      >
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+          </tr>
+        </tfoot>
+
+        <tbody>
+          <tr>
+            <td>
+              <img
+                src="<%= product.imageUrl %>"
+                class="img-fluid"
+                alt="Responsive image"
+              />
+            </td>
+            <td><%= product.name %></td>
+            <td><%= product.price %></td>
+            <td><%= product.description %></td>
+          </tr>
+        </tbody>
+      </table>
+      <% } else if(product!='') { %>
+      <div class="alert alert-danger">
+    Product doest not exist with this name.
+  </div>
+  <% } %>
+</div>
+<%- include('../partials/footer') -%>

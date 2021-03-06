@@ -6,6 +6,7 @@ const async = require('async');
 const nodemailer = require('nodemailer');
 const crypto=require('crypto')
 const User=require('../models/usermodel')
+const Product=require('../models/productmodel');
 
 // Checks if user is authenticated
 function isAuthenticatedUser(req, res, next) {
@@ -28,6 +29,25 @@ router.get('/login',(req,res)=>{
 router.get('/signup',(req,res)=>{
     res.render('signup')
 })
+
+//Rendering all products from users
+router.get('/announcements',(req,res)=>{
+  Product.find({})
+  .then((products) => {
+    res.render("announcements", { products: products });
+  })
+  .catch((error) => {
+    req.flash("error_msg", "ERROR:" + error);
+    res.redirect("/announcements");
+  });
+})
+
+
+/*
+router.get('/dashboard',isAuthenticatedUser,(req,res)=>{
+  res.render('dashboard')
+})
+*/
 
 router.get('/logout',isAuthenticatedUser,(req,res)=>{
     req.logOut();

@@ -2,7 +2,9 @@
 <div class="container">
   <%- include('./partials/messages') -%>
 
-  <div class="row">
+  <h2 class="text-center text-danger">Admin Dashboard</h2>
+  
+  <div class="row mb-5">
     <div class="col-xl-12 col-sm-12">
       <div class="cart-body text-white p-3 bg-primary text-center rounded">
         Total Products <%= products.length %>
@@ -10,12 +12,13 @@
     </div>
   </div>
 
-  <div class="row mb-5">
-    <div class="col-xl-2 col-sm-2"><%- include('./partials/sidebar') -%></div>
-    <div
-      class="col-xl-10 col-sm-10 d-flex flex-wrap flex-wrap align-items-center"
-    >
-      <%- include('./admin-dashboard/search') -%>
+  <div class="row">
+
+    <div class="col-xl-2 col-sm-2">
+      <%- include('./partials/sidebar') -%>
+    </div>
+
+    <div class="col-xl-10 col-sm-10 d-flex flex-wrap flex-wrap align-items-center">
       <table
         class="table table-bordered"
         id="dataTable"
@@ -56,7 +59,9 @@
           <% }) %>
         </tbody>
       </table>
+
     </div>
+
   </div>
 
   <%- include('./partials/footer') -%>
