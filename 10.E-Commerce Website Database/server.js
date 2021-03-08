@@ -11,8 +11,9 @@ const bodyParser=require('body-parser');
 const localStrategy=require('passport-local').Strategy;
 const methodOverride = require('method-override');
 
+
 //Static files
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 //Setting up bodyparser
 app.use(bodyParser.urlencoded({ extended: false }))

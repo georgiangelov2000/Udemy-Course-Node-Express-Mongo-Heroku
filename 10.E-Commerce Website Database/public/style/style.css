@@ -1,0 +1,7 @@
+.img-fluid{
+    height: 100px;
+}
+.table td, .table th {
+vertical-align: baseline;
+text-align: center;
+}

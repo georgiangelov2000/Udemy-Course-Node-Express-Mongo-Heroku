@@ -1,18 +1,14 @@
 <%- include('../partials/header') -%>
 
-<div class="container">
+<div class="container w-50">
   <%- include('../partials/messages') -%>
   <h1 class="text-center">New Product</h1>
-<form action="/product/new" method="POST" enctype = " multipart / form-data " >
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text">Upload</span>
-    </div>
-    <div class="custom-file">
-      <input type="file" class="custom-file-input" id="imageUrl" name="imageUrl">
-      <label class="custom-file-label" for="imageUrl">Choose file</label>
-    </div>
-  </div>
+<div class="custom-file">
+  <form class="form-control" action="/product/new" enctype="multipart/form-data" method="POST"  >
+
+  <input name="imageUrl" type="file" class="custom-file-input"">
+  <label class=" custom-file-label" for="customFile">Choose Image</label>
+
   <div class="form-group">
     <label for="name">Name</label>
     <input type="text" class="form-control" id="name"  name="name" placeholder="Enter name">
@@ -28,4 +24,7 @@
   <button type="submit" class="btn btn-primary  btn-lg btn-block ">Submit</button>
 </form>
 </div>
+</div>
 <%- include('../partials/footer') -%>
+
+

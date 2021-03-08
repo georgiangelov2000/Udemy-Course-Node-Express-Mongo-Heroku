@@ -22,7 +22,6 @@
       <table
         class="table table-bordered"
         id="dataTable"
-        width="100%"
         cellspacing="0"
       >
         <thead>
@@ -45,16 +44,16 @@
         <tbody>
           <% products.forEach((product)=>{ %>
           <tr>
-            <td>
+            <td class="text-center">
               <img
                 src="<%= product.imageUrl %>"
-                class="img-fluid"
+                class="img-fluid rounded"
                 alt="Responsive image"
               />
             </td>
-            <td><%= product.name %></td>
-            <td><%= product.price %> $</td>
-            <td><%= product.description %></td>
+            <td class=" text-center" ><%= product.name %></td>
+            <td class=" text-center" ><%= product.price %> $</td>
+            <td class=" text-center" ><%= product.description %></td>
           </tr>
           <% }) %>
         </tbody>
