@@ -11,13 +11,20 @@ const bodyParser=require('body-parser');
 const localStrategy=require('passport-local').Strategy;
 const methodOverride = require('method-override');
 
+//Overrride Method
+app.use(methodOverride('_method'));
+
+//Path
+app.set('views',path.join(__dirname,'views'));
+
+//Template
+app.set('view engine','ejs')
 
 //Static files
 app.use(express.static('public'));
 
 //Setting up bodyparser
 app.use(bodyParser.urlencoded({ extended: false }))
-
 
 //Router
 const router=require('./functionality/routes/router');
@@ -41,7 +48,7 @@ mongoose.connect(process.env.DB_LOCAL,{
 app.use(session({
     secret : 'Just a simple login/sign up application.',
     resave : true,
-    saveUninitialized : true
+    saveUninitialized :true
 }));
 
 //Setting up passport
@@ -62,15 +69,6 @@ app.use((req, res, next)=> {
     res.locals.currentUser = req.user;
     next();
 });
-
-//Overrride Method
-app.use(methodOverride('_method'));
-
-//Path
-app.set('views',path.join(__dirname,'views'));
-
-//Template
-app.set('view engine','ejs')
 
 //Middleware router
 app.use(router)
