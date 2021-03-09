@@ -43,6 +43,7 @@ router.get('/announcements',(req,res)=>{
   });
 })
 
+
 router.get('/logout',isAuthenticatedUser,(req,res)=>{
     req.logOut();
     req.flash('success_msg', 'You have been logged out.');

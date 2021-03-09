@@ -4,6 +4,6 @@ let productScheme=new mongoose.Schema({
     imageUrl:String,
     name:String,
     description:String,
-    price:Number
+    price:Number,
 })
  module.exports = mongoose.model('Product', productScheme);

@@ -10,6 +10,10 @@ const flash=require('connect-flash');
 const bodyParser=require('body-parser');
 const localStrategy=require('passport-local').Strategy;
 const methodOverride = require('method-override');
+const cookieParser=require('cookie-parser');
+
+//cookie parsers
+app.use(cookieParser());
 
 //Overrride Method
 app.use(methodOverride('_method'));
@@ -77,4 +81,5 @@ app.use(DashboardRouter)
 app.listen(process.env.PORT,()=>{
     console.log('Server is started');
 })
+
 
