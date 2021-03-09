@@ -115,7 +115,6 @@ router.get("/products/myproducts", (req, res) => {
 });
 
 //Post Routes
-
 router.post("/product/new", upload.single("imageUrl"), (req, res, next) => {
   const file = req.file;
   const name=req.body.name;
@@ -128,7 +127,7 @@ router.post("/product/new", upload.single("imageUrl"), (req, res, next) => {
   
   let url = file.path.replace("public", "");
 
-  Product.findOne({ imageUrl: url, name:name,description:description,price:price })
+  Product.findOne({ imageUrl: url, name:name, description:description, price:price })
     .then(product => {
       if (product) {
         req.flash("error_msg", "ERROR:" + '"Duplicate Image. Try Again!');
@@ -190,21 +189,24 @@ module.exports = router;
 
 
 /*
-router.post("/product/new",(req, res,) => {
-  const newProduct = {
-    imageUrl:req.body.imageUrl,
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-  };
-  Product.create(newProduct)
+router.put("/product/update/:id", (req, res) => {
+  const searchQuery = { _id: req.params.id };
+
+  Product.updateOne(searchQuery, {
+    $set: {
+      imageUrl: req.body.imageUrl,
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+    },
+  })
     .then((product) => {
-      req.flash("success_msg", "Product data added to database successfully.");
+      req.flash("success_msg", "Product data updated successfully");
       res.redirect("/dashboard");
     })
     .catch((error) => {
-      req.flash("error_msg", "Error:" + error);
-      res.redirect("/product/new");
+      req.flash("error_msg", "ERROR:" + error);
+      res.redirect("/dashboard");
     });
 });
 */
