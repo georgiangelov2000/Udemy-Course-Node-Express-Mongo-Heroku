@@ -8,33 +8,34 @@ const crypto=require('crypto')
 const User=require('../models/usermodel')
 const Product=require('../models/productmodel');
 
+
 // Checks if user is authenticated
 function isAuthenticatedUser(req, res, next) {
     if(req.isAuthenticated()) {
         return next();
     }
     req.flash('error_msg', 'Please Login first to access this page.')
-    res.redirect('/login');
+    res.redirect('users/login');
 }
 
 //Get Routes
 router.get('/',(req,res)=>{
-    res.render('index')
+    res.render('users/index')
 })
 
 router.get('/login',(req,res)=>{
-    res.render('login')
+    res.render('users/login')
 })
 
 router.get('/signup',(req,res)=>{
-    res.render('signup')
+    res.render('users/signup')
 })
 
 //Rendering all products from users
 router.get('/announcements',(req,res)=>{
   Product.find({})
   .then((products) => {
-    res.render("announcements", { products: products });
+    res.render("users/announcements", { products: products });
   })
   .catch((error) => {
     req.flash("error_msg", "ERROR:" + error);
@@ -49,7 +50,7 @@ router.get('/logout',isAuthenticatedUser,(req,res)=>{
 })
 
 router.get('/forgotpassword',(req,res)=>{
-    res.render('forgotpassword')
+    res.render('users/forgotpassword')
 })
 
 //reset password of the current User
@@ -66,7 +67,7 @@ router.get("/reset/:token",isAuthenticatedUser, (req, res) => {
         );
         res.redirect("/forgotpassword");
       }
-      res.render("newpassword", {
+      res.render("users/newpassword", {
         token: req.params.token,
       });
     })
@@ -77,15 +78,15 @@ router.get("/reset/:token",isAuthenticatedUser, (req, res) => {
 });
 
 router.get('/password/change',(req,res)=>{
-  res.render('changepassword')
+  res.render('users/changepassword')
 })
 
 //Post Routes
 
 //login
 router.post('/login', passport.authenticate('local', {
-    successRedirect : '/dashboard',
-    failureRedirect : '/login',
+    successRedirect : 'dashboard',
+    failureRedirect : 'login',
     failureFlash: 'Invalid email or password. Try Again!!!'
 }));
 

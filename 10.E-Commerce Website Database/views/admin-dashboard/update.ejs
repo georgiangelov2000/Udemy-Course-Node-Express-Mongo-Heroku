@@ -5,7 +5,6 @@
   <h1 class="text-center">Update Product</h1>
 <div class="custom-file">
   <form class="form-control" action="/product/update/<%= product.id %>?_method=PUT"   method="POST" enctype="multipart/form-data" >
-    <input type="hidden" name="_method" value="PUT" />
 
   <input value="<%= product.imageUrl %>" name="imageUrl" type="file" class="custom-file-input"">
   <label class=" custom-file-label" for="customFile">Choose Image</label>

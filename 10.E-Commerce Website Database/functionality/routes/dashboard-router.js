@@ -60,7 +60,7 @@ router.get("/product/instock",isAuthenticatedUser, (req, res) => {
 router.get('/dashboard',isAuthenticatedUser,(req,res)=>{
   Product.find({})
   .then((products) => {
-    res.render("dashboard", { products: products });
+    res.render("users/dashboard", { products: products });
   })
   .catch((err) => {
     req.flash("error_msg", "ERROR:" + err);

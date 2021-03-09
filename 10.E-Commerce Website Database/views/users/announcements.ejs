@@ -1,4 +1,4 @@
-<%- include('./partials/header') -%>
+<%- include('../partials/header') -%>
 
 <div class="container">
     <div class="row">
@@ -11,6 +11,7 @@
               <th scope="col">Name</th>
               <th scope="col">Description</th>
               <th scope="col">Price</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <% products.forEach((product)=>{ %>
@@ -26,6 +27,9 @@
                 <td><%= product.name %></td>
                 <td><%= product.description %></td>
                 <td><%= product.price %> $</td>
+                <td>
+                  <button type="button" class="btn btn-info">Add to cart</button>
+                </td>
               </tr>
             </tbody>
          <%  }) %>
@@ -33,4 +37,4 @@
       </div>
     </div>
   </div>
-<%- include('./partials/footer') -%>
+<%- include('../partials/footer') -%>

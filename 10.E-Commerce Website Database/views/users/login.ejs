@@ -1,4 +1,4 @@
-<%- include('./partials/header') -%>
+<%- include('../partials/header') -%>
 <% if(currentUser){ %>
   <h1 class="text-center">You are in your account</h1>
   <h5 class="text-center">Go to 
@@ -12,7 +12,7 @@
       <span class="text-success">Email: stu1901321112@uni-plovdiv.bg</span>
       <span class="text-success">Password: 123456789</span>
     </p>
-    <%- include('./partials/messages') -%>
+    <%- include('../partials/messages') -%>
   <form accept="/login" method="POST">
       <div class="form-group">
         <label for="email">Email address</label>
@@ -27,4 +27,4 @@
     </form>
   </div>
 <% } %>
-<%- include('./partials/footer') -%>
+<%- include('../partials/footer') -%>
