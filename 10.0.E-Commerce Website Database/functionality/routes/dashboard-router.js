@@ -3,6 +3,7 @@ const router = express.Router();
 const Product = require("../models/productmodel");
 const multer=require('multer');
 const path=require('path');
+const authenticate = require("passport-local-mongoose/lib/authenticate");
 
 //Set Image Storage
 let storage = multer.diskStorage({
@@ -145,47 +146,38 @@ router.post("/product/new", upload.single("imageUrl"), (req, res, next) => {
     });
 });
 
-router.put("/product/update/:id", (req, res) => {
-  const searchQuery = { _id: req.params.id };
 
-  Product.updateOne(searchQuery, {
-    $set: {
-      imageUrl: req.body.imageUrl,
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-    },
-  })
-    .then((product) => {
-      req.flash("success_msg", "Product data updated successfully");
-      res.redirect("/dashboard");
-    })
-    .catch((error) => {
-      req.flash("error_msg", "ERROR:" + error);
-      res.redirect("/dashboard");
-    });
+router.put('/product/update/:id',isAuthenticatedUser,upload.single('imageUrl'),(req,res)=>{
+  const searchquery={_id:req.params.id};
+
+  const name=req.body.name;
+  const description=req.body.description;
+  const price=req.body.price;
+
+  const updates={
+    name,
+    description,
+    price
+  }
+
+  if(req.file){
+    const imageUrl=req.file.filename;
+    updates.imageUrl=imageUrl
+  }
+
+  Product.findOneAndUpdate(searchquery, {
+    $set: updates
+}, {
+    new: true
+}).then(product => {
+  req.flash("success_msg", "Product data updated successfully");
+  res.redirect('/dashboard');
+})
+.catch(err => {
+  req.flash("error_msg", "ERROR:" + error);
+  res.redirect("/dashboard");
 });
-
-router.delete("/product/delete/:id", (req, res) => {
-  const id = { _id: req.params.id };
-  Product.findByIdAndDelete(id)
-    .then((product) => {
-      req.flash("success_msg", "Product deleted succesfully.");
-      res.redirect("/dashboard");
-    })
-    .catch((error) => {
-      req.flash("error_msg", "ERROR:" + error);
-      res.redirect("/dashboard");
-    });
-});
-
-module.exports = router;
-
-
-
-
-
-
+})
 
 /*
 router.put("/product/update/:id", (req, res) => {
@@ -209,3 +201,18 @@ router.put("/product/update/:id", (req, res) => {
     });
 });
 */
+
+router.delete("/product/delete/:id", (req, res) => {
+  const id = { _id: req.params.id };
+  Product.findByIdAndDelete(id)
+    .then((product) => {
+      req.flash("success_msg", "Product deleted succesfully.");
+      res.redirect("/dashboard");
+    })
+    .catch((error) => {
+      req.flash("error_msg", "ERROR:" + error);
+      res.redirect("/dashboard");
+    });
+});
+
+module.exports = router;

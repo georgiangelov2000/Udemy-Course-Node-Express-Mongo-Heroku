@@ -46,7 +46,7 @@ mongoose.connect(process.env.DB_LOCAL,{
     useCreateIndex:true,
     useCreateIndex:true,
     useUnifiedTopology: true
-});
+})
 
 //Setting up session
 app.use(session({

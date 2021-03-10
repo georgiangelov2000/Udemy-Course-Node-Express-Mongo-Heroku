@@ -55,7 +55,7 @@ router.get('/forgotpassword',(req,res)=>{
 })
 
 //reset password of the current User
-router.get("/reset/:token",isAuthenticatedUser, (req, res) => {
+router.get("/reset/:token",(req, res) => {
   User.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() },
@@ -159,7 +159,7 @@ router.post("/forgotpassword", (req, res, next) => {
           subject: "Recovery Email from Auth Project",
           text:
             "Please click the following link to recover your passoword: \n\n" +
-            "http://" +req.headers.host +"/reset/" +token +"\n\n" +"If you did not request this, please ignore this email.",
+            "http://" +req.headers.host +"/reset/" + token +"\n\n" +"If you did not request this, please ignore this email.",
         };
         smtpTransport.sendMail(mailOptions, (error) => {
           req.flash(

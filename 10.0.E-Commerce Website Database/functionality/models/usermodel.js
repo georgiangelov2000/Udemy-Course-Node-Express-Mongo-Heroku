@@ -2,8 +2,14 @@ const mongoose=require('mongoose');
 const passportLocalMongoose=require('passport-local-mongoose');
 
 let userSheme=new mongoose.Schema({
-    name:String,
-    email:String,
+    name:{
+        type:String,
+        require:true
+    },
+    email:{
+        type:String,
+        required:true,
+    },
     password:{
         type:String,
         select:false
