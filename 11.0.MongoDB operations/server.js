@@ -3,7 +3,6 @@ const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
 const bodyParser = require("body-parser");
-const ok=require('okay');
 const logger=require('morgan');
 
 app.set("views", path.join(__dirname, "views"));
@@ -19,25 +18,19 @@ const dbConnection = mongoose.createConnection(url, {
 });
 const Schema = mongoose.Schema;
 const testSchema = new Schema({
-  title:{
+  firstname:{
     type:String,
     required:true
   },
-  text:{
+  lastname:{
     type:String,
     required:true
   },
-  createdAt:{
+  date:{
     type: Date,
     default: Date.now,
     required: true
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-    required: true
-  },
-  published: Boolean,
 });
 
 const Test = dbConnection.model("Test", testSchema, "tests");
@@ -54,10 +47,9 @@ app.get("/", function (req, res) {
 
 app.post("/tests/form-data", (req, res) => {
   let test = new Test({
-    title: req.body.title,
-    text: req.body.text,
-    createdAt:req.body.createdAt,
-    updatedAt:req.body.updatedAt
+    firstname:  req.body.firstname,
+    lastname: req.body.lastname,
+    date: req.body.date,
   });
   test
     .save(test)
@@ -65,7 +57,9 @@ app.post("/tests/form-data", (req, res) => {
       res.send(data);
     })
     .catch((error) => {
-      console.log(error);
+      res.status(500).send({
+        message:error
+      })
     });
 });
 
@@ -86,12 +80,11 @@ app.get('/tests/form-data/:id',(req,res,next)=>{
     res.send(data)
   })
   .catch((error)=>{
-    console.log(error)
+    res.status(500).send({
+      message:error
+    })
   })
 })
-
-app.listen(4000);
-
 
 app.put('/tests/form-data/:id',(req,res,next)=>{
   const query= req.params.id
@@ -100,6 +93,33 @@ app.put('/tests/form-data/:id',(req,res,next)=>{
     res.send(data)
   })
   .catch((error)=>{
-    console.log(error)
+    res.status(500).send({
+      message:error
+    })
   })
 })
+
+app.delete('/tests/form-data/:id',(req,res,next)=>{
+  const query= req.params.id
+  Test.findByIdAndRemove(query)
+  .then((data)=>{
+    if(!data){
+      res.status(404).send({
+        message:'User with this id does not exist '
+      })
+    }else{
+      res.send({
+        message:'User was delete successfully'
+      })
+    }
+  })
+  .catch((error)=>{
+    res.status(500).send({
+      message:error
+    })
+  })
+})
+
+app.listen(4000);
+
+

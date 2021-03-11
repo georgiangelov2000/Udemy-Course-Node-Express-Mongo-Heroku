@@ -8,16 +8,15 @@
 </head>
 <body>
     <form action="/tests/form-data" method="POST" >
-        <input type="text" name="title" placeholder="Title">
-        <input type="text" name="text" placeholder="Text">
+        <input type="text" name="firstname" placeholder="Firstname">
+        <input type="text" name="lastname" placeholder="Lastname">
         <input type="submit" value="submit">
     </form>
         <% tests.forEach((test)=>{ %>    
         <div class="container">
-            <p><%= test.title %></p>
-            <p><%= test.text %></p>
-            <p><%= test.createdAt %></p>
-            <p><%= test.text %></p>
+            <p><small>Firstname:</small><%= test.firstname %></p>
+            <p><small>Lastname:</small><%= test.lastname %></p>
+            <p><small>Data:</small><%= test.date %></p>
         </div>
         <% }) %>
 
