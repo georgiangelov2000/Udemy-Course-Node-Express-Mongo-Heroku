@@ -12,16 +12,16 @@ router.get("/", function (req, res) {
   })
 });
 
-router.get('/edit-product/:id',(req,res)=>{
-  const user_id={id:req.params.id};
+router.get("/edit-product/:id", (req, res) => {
+  const user_id = { _id: req.params.id };
   Product.findOne(user_id)
-  .then((product)=>{
-    res.render('products/edit-product',{product:product})
-  })
-  .catch((error)=>{
-    console.log(error)
-  })
-})
+    .then((product) => {
+      res.render("products/edit-product", { product: product });
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+});
 
 router.post("/add-product",(req, res) => {
   const product=new Product({
@@ -35,6 +35,7 @@ router.post("/add-product",(req, res) => {
     res.redirect('/')
   })
   .catch((error)=>{
+    console.log(error)
     console.log(error)
     res.redirect('/')
   })
@@ -51,10 +52,11 @@ router.put('/edit-product/:id',(req,res)=>{
     }
   })
   .then((data)=>{
-    res.render('products/index')
+    res.redirect('/')
   })
   .catch((error)=>{
     console.log(error)
+    res.redirect('/');
   })
 })
 
