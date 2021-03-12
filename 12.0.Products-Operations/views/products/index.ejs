@@ -1,0 +1,57 @@
+<%- include('../partials/header') -%>
+
+<% if(products<=0){ %>
+  <h5 class="text-center text-primary">Not found Products</h1>
+    <p class="text-center">Go to Add Products in Navigation </p>
+<% }else { %>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-md-12 col-sm-12">
+        <h1 class="text-center">Products</h1>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">imageUrl</th>
+              <th scope="col">Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <% products.forEach((product)=>{ %>
+          <tbody>
+            <tr>
+              <td>
+                <img src="<%= product.imageUrl %>" class="img-fluid" alt="Responsive image" />
+              </td>
+              <td><%= product.title %></td>
+              <td><%= product.description %></td>
+              <td>
+                <div class="row">
+                  <div class="col-md-6"  >
+                    <a href="/edit-product/<%= product.id %>" class="btn btn-outline-primary">
+                      <span>Edit</span>
+                    </a>
+                  </div>
+                  <div  class="col-md-6" >
+  
+                    <form action="/product/delete/<%= product.id %>?_method=DELETE" method="POST">
+                      <div class="form-group">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input class="btn btn-outline-danger" type="submit" value="Delete">
+                      </div>
+                    </form>
+  
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <% }) %>
+        </table>
+      </div>
+    </div>
+  </div>
+<% } %>
+
+
+<%- include('../partials/footer') -%>
