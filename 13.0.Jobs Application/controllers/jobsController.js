@@ -1,3 +1,4 @@
+const jobs = require('../models/jobs');
 const Jobs=require('../models/jobs');
 const geoCoder=require('../utilities/geocoder');
 
@@ -19,6 +20,27 @@ exports.newJob=async (req,res,next)=>{
         message:'Job Created',
         data:jobs
     });
+}
+
+//Update a job =>/api/v1/job/:id
+exports.updateJob=async (req,res,next)=>{
+    let  job= await Jobs.findById(req.params.id)
+    if(!job){
+        res.status(400).json({
+            success:false,
+            message:"Job not found"
+        })
+    }
+    job=await Jobs.findByIdAndUpdate(req.params.id,req.body,{
+        new:true,
+        runValidators:true,
+        useFindAndModify:false,
+    })
+    res.status(200).json({
+        success:true,
+        message:'Job not found',
+        data:job
+    })
 }
 
 //Search job with radius => /api/v1/jobs/:zipcode/:distance
