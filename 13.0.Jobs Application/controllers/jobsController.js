@@ -26,7 +26,7 @@ exports.newJob=async (req,res,next)=>{
 exports.updateJob=async (req,res,next)=>{
     let  job= await Jobs.findById(req.params.id)
     if(!job){
-        res.status(400).json({
+       return res.status(400).json({
             success:false,
             message:"Job not found"
         })
@@ -38,9 +38,28 @@ exports.updateJob=async (req,res,next)=>{
     })
     res.status(200).json({
         success:true,
-        message:'Job not found',
+        message:'Job not found .',
         data:job
     })
+}
+
+//Delete a job => /api/v1/job/:id
+exports.deleteJob= async (req,res,next)=>{
+    let job=await Jobs.findById(req.params.id);
+
+    if(!job){
+        return res.status(404).json({
+            success:false,
+            message:'Job not found .'
+        })
+    }
+    
+    job=await Jobs.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+        success:true,
+        message:"Job is deleted ."
+    });
 }
 
 //Search job with radius => /api/v1/jobs/:zipcode/:distance
