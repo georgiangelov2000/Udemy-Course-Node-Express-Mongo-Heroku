@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-
+const slugify=require('slugify');
 const jobsSchema = new mongoose.Schema({
 
   title: {
@@ -23,7 +23,7 @@ const jobsSchema = new mongoose.Schema({
     validate: [validator.isEmail, "Please add a valid email address."],
   },
 
-  adress: {
+  address: {
     type: String,
     required: [true, "Please add an address."],
   },
@@ -63,7 +63,11 @@ const jobsSchema = new mongoose.Schema({
     type: String,
     required: true,
     options: {
-      values: ["Bachalors", "Masters", "PHD"],
+      values: [
+        "Bachalors", 
+        "Masters", 
+        "PHD"
+      ],
       message: "Please select correct options for Education.",
     },
   },
@@ -80,7 +84,7 @@ const jobsSchema = new mongoose.Schema({
       value: [
         "No Experience",
         "1 Year - 2 years",
-        "2 Year - 5 years",
+        "2 Years - 5 years",
         "5 Years +",
       ],
       message: "Please select correct option for Experience",
@@ -106,6 +110,7 @@ const jobsSchema = new mongoose.Schema({
       type:[Object],
       select:false,
   }
+  
 });
 
 module.exports=mongoose.model('Jobs',jobsSchema);

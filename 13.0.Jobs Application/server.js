@@ -1,29 +1,17 @@
-//Modules
 const express=require('express');
 const app=express();
-const methodOverride=require('method-override');
-const bodyParser=require('body-parser');
 const dotenv=require('dotenv');
-const path=require('path');
-const jobsRouter=require('./routes/jobs');
+const jobsRouter = require('./routes/jobs');
 const connectDatabase=require('./config/database');
 
-//config dotenv
 dotenv.config({path:'./config/config.env'});
+connectDatabase();
 
-//connect to database
-connectDatabase()
+app.use(express.json());
 
-//middleware
-app.use('view-engine','ejs')
-app.use(bodyParser.urlencoded({extended:false}))
-app.use(methodOverride('_method'));
-app.use('views',path.join(__dirname,'views'))
-app.use(express.static('public'))
+app.use('/api/v1',jobsRouter);
 
-//jobs router
-app.use(jobsRouter);
-
-app.listen(process.env.PORT,()=>{
-    console.log('Server started')
-});
+const PORT=process.env.PORT;
+app.listen(PORT,()=>{
+    console.log(`Server started on port ${process.env.PORT} in ${process.env.NODE_ENV}`)
+})
