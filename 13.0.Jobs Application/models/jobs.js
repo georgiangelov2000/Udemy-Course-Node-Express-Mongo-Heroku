@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const slugify=require('slugify');
+const geoCoder=require('../utilities/geocoder');
+
 const jobsSchema = new mongoose.Schema({
 
   title: {
@@ -21,6 +23,24 @@ const jobsSchema = new mongoose.Schema({
   email: {
     type: String,
     validate: [validator.isEmail, "Please add a valid email address."],
+  },
+
+  location:{
+
+    type:{
+      type:String,
+      options:['Point']
+    },
+
+    coordinates:{
+      type:[Number],
+      index:'2dsphere'
+    },
+    formattedAddress:String,
+    city:String,
+    state:String,
+    zipcode:String,
+    country:String,
   },
 
   address: {
@@ -112,5 +132,29 @@ const jobsSchema = new mongoose.Schema({
   }
   
 });
+
+//Creating Jon Slug before saving
+jobsSchema.pre('save',function(next){
+  //Create slug before saving to DB
+  this.slug=slugify(this.title,{lower:true});
+  next();
+})
+
+
+//Setting up Location
+jobsSchema.pre('save',async (next)=>{
+  const loc= await geoCoder.geocode(this.address);
+
+  this.location={
+    type:'Point',
+    coordinates:[loc[0].longtitude,loc[0].latitude],
+    formattedAddress: loc[0].formattedAddress,
+    city:loc[0].city,
+    state:loc[0].stateCode,
+    zipcode:loc[0].zipcode,
+    country:loc[0].countryCode
+  }
+
+})
 
 module.exports=mongoose.model('Jobs',jobsSchema);
