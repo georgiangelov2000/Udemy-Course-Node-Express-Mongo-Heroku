@@ -1,11 +1,20 @@
-<%- include('./partials/header') -%>
+<%- include('../partials/header') -%>
+
+<% jobs.forEach((job)=>{ %>
 <div class="card" style="width: 18rem;">
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
+      <h5 class="card-title"><%= job.title %></h5>
+      <h6 class="card-subtitle mb-2 text-muted"><%= job.description %></h6>
+      <p class="card-text"><%= job.email %></p>
+      <p class="card-text"><%= job.address %></p>
+      <p class="card-text"><%= job.company %></p>
+      <p class="card-text"><%= job.industry %></p>
+      <p class="card-text"><%= job.jobType %></p>
+      <p class="card-text"><%= job.minEducation %></p>
+      <p class="card-text"><%= job.experience %></p>
+      <p class="card-text"><%= job.salary %></p>
     </div>
   </div>
-<%- include('./partials/footer') -%>
+  <% }) %>
+
+<%- include('../partials/footer') -%>

@@ -1,25 +1,32 @@
-const jobs = require('../models/jobs');
 const Jobs=require('../models/jobs');
 const geoCoder=require('../utilities/geocoder');
 
 //render Jobs
 exports.getJobs=async (req,res,next)=>{
      const jobs= await Jobs.find();
-     res.status(200).json({
-         success:true,
-         results:jobs.length,
-         data:jobs
-     })
-}
+     res.render('jobs/index.ejs',{jobs:jobs})
+};
+
+//get new Job form
+exports.getJobForm=(req,res,next)=>{
+    res.render('jobs/new-job.ejs')
+};
 
 //create a new Job
 exports.newJob=async (req,res,next)=>{
-    const jobs = await Jobs.create(req.body);
-    res.status(200).json({
-        success:true,
-        message:'Job Created',
-        data:jobs
+    const jobs = await Jobs.create({
+        title:req.body.title,
+        description:req.body.description,
+        email:req.body.email,
+        address:req.body.address,
+        company:req.body.company,
+        industry:req.body.industry,
+        jobType:req.body.jobType,
+        minEducation:req.body.minEducation,
+        experience:req.body.experience,
+        salary:req.body.salary,
     });
+    res.redirect('/jobs')
 }
 
 //Update a job =>/api/v1/job/:id
@@ -41,7 +48,7 @@ exports.updateJob=async (req,res,next)=>{
         message:'Job not found .',
         data:job
     })
-}
+};
 
 //Delete a job => /api/v1/job/:id
 exports.deleteJob= async (req,res,next)=>{
@@ -75,5 +82,4 @@ exports.getJobsInRadius= async (req,res,next)=>{
     const jobs=  await Jobs.find({
         location: {$geoWithin:{$centerSphere:[[longtitude,latitude],radius ]}}
     });
-
 };

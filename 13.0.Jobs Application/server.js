@@ -11,10 +11,11 @@ connectDatabase();
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 app.use('/api/v1',jobsRouter);
 
-app.set('view-engine','ejs')
 app.set("views", path.join(__dirname, "views"));
+app.set('view-engine','ejs')
 
 const PORT=process.env.PORT;
 app.listen(PORT,()=>{

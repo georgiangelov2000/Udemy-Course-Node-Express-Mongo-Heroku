@@ -1,17 +1,18 @@
-<%- include('./partials/header') -%>
-    <div class="container">
-        <form>
+<%- include('../partials/header') -%>
+    <div class="container mb-5 ">
+      <h1 class="text-center">New Job</h1>  
+      <form action="/job/new" method="POST">
             <div class="form-group">
               <label for="title">Title</label>
               <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
             </div>
             <div class="form-group">
               <label for="description">Description</label>
-              <input type="text" class="form-control" id="description" placeholder="Enter description" name="description">
+              <textarea class="form-control" id="description" name="description" placeholder="Description" rows="3"></textarea>
             </div>
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter email">
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
@@ -61,7 +62,7 @@
                 <label for="salary">Salary</label>
                 <input type="text" class="form-control" id="salary" placeholder="Enter salary " name="salary">
               </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
           </form>
     </div>
-<%- include('./partials/footer') -%>
+<%- include('../partials/footer') -%>
