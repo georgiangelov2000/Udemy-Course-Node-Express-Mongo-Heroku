@@ -1,13 +1,20 @@
+const { json } = require('body-parser');
 const Jobs=require('../models/jobs');
 const geoCoder=require('../utilities/geocoder');
 
 //render Jobs
 exports.getJobs=async (req,res,next)=>{
-     const jobs= await Jobs.find();
-     res.render('jobs/index.ejs',{jobs:jobs})
+     await Jobs.find()
+     .then((jobs)=>{
+         res.render('jobs/index.ejs',{jobs:jobs})
+     })
+     .catch((error)=>{
+         console.log(error)
+         res.redirect('/jobs')
+     })
 };
 
-//get new Job form
+//get Job form
 exports.getJobForm=(req,res,next)=>{
     res.render('jobs/new-job.ejs')
 };
@@ -25,8 +32,16 @@ exports.newJob=async (req,res,next)=>{
         minEducation:req.body.minEducation,
         experience:req.body.experience,
         salary:req.body.salary,
-    });
-    res.redirect('/jobs')
+    })
+    jobs
+    .save(job)
+    .then((data)=>{
+        res.redirect('/jobs')
+    })
+    .catch((error)=>{
+        console.log(error)
+        res.redirect('/jobs')
+    })
 }
 
 //Update a job =>/api/v1/job/:id
@@ -67,6 +82,21 @@ exports.deleteJob= async (req,res,next)=>{
         success:true,
         message:"Job is deleted ."
     });
+}
+
+//Get a single job with id and slug=> /api/v1/job/:id/slug
+exports.getJob=async(req,res,next)=>{
+const job= await Jobs.find({ $and: [{_id:req.params.id} , {slug:req.params.slug}] })
+    if(!job || job.length===0){
+        return res.status(404)/json({
+            success:false,
+            message:'Job not found'
+        })
+    }   
+    res.status(200).json({
+        success:true,
+        data:job
+    })
 }
 
 //Search job with radius => /api/v1/jobs/:zipcode/:distance
