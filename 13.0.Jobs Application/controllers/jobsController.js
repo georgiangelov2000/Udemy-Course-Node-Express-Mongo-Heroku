@@ -1,8 +1,8 @@
-const { json } = require('body-parser');
 const Jobs=require('../models/jobs');
 const geoCoder=require('../utilities/geocoder');
 
 //render Jobs
+
 exports.getJobs=async (req,res,next)=>{
      await Jobs.find()
      .then((jobs)=>{
@@ -10,7 +10,7 @@ exports.getJobs=async (req,res,next)=>{
      })
      .catch((error)=>{
          console.log(error)
-         res.redirect('/jobs')
+         res.redirect('/api/v1/jobs')
      })
 };
 
@@ -24,23 +24,15 @@ exports.newJob=async (req,res,next)=>{
     const jobs = await Jobs.create({
         title:req.body.title,
         description:req.body.description,
-        email:req.body.email,
-        address:req.body.address,
-        company:req.body.company,
-        industry:req.body.industry,
-        jobType:req.body.jobType,
-        minEducation:req.body.minEducation,
-        experience:req.body.experience,
-        salary:req.body.salary,
     })
     jobs
-    .save(job)
+    .save(jobs)
     .then((data)=>{
-        res.redirect('/jobs')
+        res.redirect('/api/v1/jobs')
     })
     .catch((error)=>{
         console.log(error)
-        res.redirect('/jobs')
+        res.redirect('/api/v1/jobs')
     })
 }
 
