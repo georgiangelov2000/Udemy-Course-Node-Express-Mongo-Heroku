@@ -5,10 +5,12 @@ const jobsRouter = require('./routes/jobs');
 const connectDatabase=require('./config/database');
 const bodyParser=require('body-parser');
 const path=require('path');
+const methodOverride=require('method-override');
 
 dotenv.config({path:'./config/config.env'});
 connectDatabase();
 
+app.use(methodOverride('_method'));
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());

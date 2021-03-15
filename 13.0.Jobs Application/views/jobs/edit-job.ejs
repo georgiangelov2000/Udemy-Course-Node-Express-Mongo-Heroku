@@ -1,67 +1,34 @@
-<%- include('./partials/header') -%>
+<%- include('../partials/header') -%>
     <div class="container">
-        <form>
+      <h1 class="text-center">Edit Job</h1>
+        <form action="/api/v1/job/<%= job.id %>?_method=PUT" method="POST">
             <div class="form-group">
               <label for="title">Title</label>
-              <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
+              <input type="text" class="form-control" id="title" value="<%= job.title %>" placeholder="Enter title" name="title">
             </div>
             <div class="form-group">
               <label for="description">Description</label>
-              <input type="text" class="form-control" id="description" placeholder="Enter description" name="description">
+              <input type="text" class="form-control" id="description" value="<%= job.description %>" placeholder="Enter description" name="description">
             </div>
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter email">
+                <input type="email" class="form-control" id="email" value="<%= job.email %>" placeholder="Enter email" name="email">
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="Enter address" name="address">
+                <input type="text" class="form-control" id="address" value="<%= job.address %>" placeholder="Enter address" name="address">
             </div>
             <div class="form-group">
                 <label for="company">Company</label>
-                <input type="text" class="form-control" id="company" placeholder="Enter company" name="company">
+                <input type="text" class="form-control" id="company" value="<%= job.company %>" placeholder="Enter company" name="company">
             </div>
-            <div class="form-group">
-                <label for="industry">Indrustry</label>
-                <select multiple class="form-control" id="industry" name="industry">
-                  <option>Business</option>
-                  <option>Information Technology</option>
-                  <option>Banking</option>
-                  <option>Education/Training</option>
-                  <option>Telecommunication</option>
-                  <option>Others</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="jobType">Job Type</label>
-                <select multiple class="form-control" id="jobType" name="jobType">
-                  <option>Permanent</option>
-                  <option>Temporary</option>
-                  <option>Internship</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="minEducation">Min Education</label>
-                <select multiple class="form-control" id="minEducation" name="minEducation">
-                  <option>Bachelors</option>
-                  <option>Masters</option>
-                  <option>Phd</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="minEducation">Exprecience</label>
-                <select multiple class="form-control" id="experience" name="experience">
-                  <option>No Experience</option>
-                  <option>1 Year - 2 Years</option>
-                  <option>2 Year - 5 Years</option>
-                  <option>5 Years+</option>
-                </select>
-              </div>
               <div class="form-group">
                 <label for="salary">Salary</label>
-                <input type="text" class="form-control" id="salary" placeholder="Enter salary " name="salary">
+                <input type="text" class="form-control" id="salary" value="<%= job.salary %>" placeholder="Enter salary " name="salary">
               </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
     </div>
-<%- include('./partials/footer') -%>
+<%- include('../partials/footer') -%>
+
+<!-- /api/v1/job/<%= job.id %>?_method=PUT -->

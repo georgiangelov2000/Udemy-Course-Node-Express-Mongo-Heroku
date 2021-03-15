@@ -17,6 +17,34 @@ const jobsSchema = new mongoose.Schema({
       required : [true, 'Please enter Job description.'],
       maxlength : [1000, 'Job description can not exceed 1000 characters.']
   },
+  email : {
+    type : String,
+    validate : [validator.isEmail, 'Please add a valid email address.']
+  },
+  address : {
+    type : String,
+    required : [true, 'Please add an address.']
+  },
+  company : {
+    type : String,
+    required : [true, 'Please add Company name.']
+  },
+  salary : {
+    type : Number,
+    required : [true, 'Please enter expected salary for this job.']
+  },
+  postingDate : {
+    type : Date,
+    default : Date.now
+  },
+  lastDate : {
+    type : Date,
+    default : new Date().setDate(new Date().getDate() + 7)
+  },
+  applicantsApplied : {
+    type : [Object],
+    select : false
+  },
 });
 
 /*

@@ -2,7 +2,6 @@ const Jobs=require('../models/jobs');
 const geoCoder=require('../utilities/geocoder');
 
 //render Jobs
-
 exports.getJobs=async (req,res,next)=>{
      await Jobs.find()
      .then((jobs)=>{
@@ -14,16 +13,22 @@ exports.getJobs=async (req,res,next)=>{
      })
 };
 
-//get Job form
+//get Job formapi/v1/jobs
 exports.getJobForm=(req,res,next)=>{
     res.render('jobs/new-job.ejs')
 };
 
-//create a new Job
+//create a new Job api/v1/job/new
 exports.newJob=async (req,res,next)=>{
     const jobs = await Jobs.create({
         title:req.body.title,
         description:req.body.description,
+        email:req.body.email,
+        address:req.body.address,
+        company:req.body.company,
+        salary:req.body.salary,
+        postingDate:req.body.postingDate,
+        lastDate:req.body.lastDate
     })
     jobs
     .save(jobs)
@@ -36,44 +41,53 @@ exports.newJob=async (req,res,next)=>{
     })
 }
 
+//get updateJob => api/v1/job/:id/
+exports.getUpdateJob=async (req,res,next)=>{
+    const job= { _id: req.params.id };
+  await  Jobs.findOne(job)
+      .then((job) => {
+        res.render("jobs/edit-job.ejs", { job:job });
+      })
+      .catch((error) => {
+        console.log(error)
+        res.redirect('/api/v1/jobs')
+      });
+}
+
 //Update a job =>/api/v1/job/:id
 exports.updateJob=async (req,res,next)=>{
-    let  job= await Jobs.findById(req.params.id)
-    if(!job){
-       return res.status(400).json({
-            success:false,
-            message:"Job not found"
-        })
-    }
-    job=await Jobs.findByIdAndUpdate(req.params.id,req.body,{
-        new:true,
-        runValidators:true,
-        useFindAndModify:false,
-    })
-    res.status(200).json({
-        success:true,
-        message:'Job not found .',
-        data:job
-    })
+    const job={_id:req.params.id};
+
+   await Jobs.findByIdAndUpdate(job,{
+        $set: {
+            title:req.body.title,
+            description:req.body.description,
+            email:req.body.email,
+            address:req.body.address,
+            company:req.body.company,
+            salary:req.body.salary,
+        }
+      })
+      .then((data)=>{
+        res.redirect('/api/v1/jobs')
+      })
+      .catch((error)=>{
+        console.log(error)
+        res.redirect('/api/v1/jobs');
+      })
 };
 
 //Delete a job => /api/v1/job/:id
 exports.deleteJob= async (req,res,next)=>{
-    let job=await Jobs.findById(req.params.id);
-
-    if(!job){
-        return res.status(404).json({
-            success:false,
-            message:'Job not found .'
-        })
-    }
-    
-    job=await Jobs.findByIdAndDelete(req.params.id);
-
-    res.status(200).json({
-        success:true,
-        message:"Job is deleted ."
-    });
+    const job={_id:req.params.id};
+    Jobs.findByIdAndDelete(job)
+    .then((job)=>{
+        res.redirect('/api/v1/jobs')
+    })
+    .catch((error)=>{
+        console.log(error)
+        res.redirect('/api/v1/jobs')
+    })
 }
 
 //Get a single job with id and slug=> /api/v1/job/:id/slug
