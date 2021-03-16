@@ -1,0 +1,7 @@
+body{
+    background-color: red;
+}
+
+.table td, .table th{
+    width: 16.66%;
+}
