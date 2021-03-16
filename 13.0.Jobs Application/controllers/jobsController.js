@@ -3,12 +3,12 @@ const geoCoder=require('../utilities/geocoder');
 
 //render Jobs
 exports.getJobs=async (req,res,next)=>{
+    
      await Jobs.find()
      .then((jobs)=>{
          res.render('jobs/index.ejs',{jobs:jobs})
      })
      .catch((error)=>{
-         console.log(error)
          res.redirect('/api/v1/jobs')
      })
 };
