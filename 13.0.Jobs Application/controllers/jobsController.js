@@ -39,7 +39,7 @@ exports.newJob=async (req,res,next)=>{
         console.log(error)
         res.redirect('/api/v1/jobs')
     })
-}
+};
 
 //get updateJob => api/v1/job/:id/
 exports.getUpdateJob=async (req,res,next)=>{
@@ -52,7 +52,7 @@ exports.getUpdateJob=async (req,res,next)=>{
         console.log(error)
         res.redirect('/api/v1/jobs')
       });
-}
+};
 
 //Update a job =>/api/v1/job/:id
 exports.updateJob=async (req,res,next)=>{
@@ -88,7 +88,19 @@ exports.deleteJob= async (req,res,next)=>{
         console.log(error)
         res.redirect('/api/v1/jobs')
     })
-}
+};
+
+exports.getDetailsForJob= async(req,res,next)=>{
+    const job= { _id: req.params.id };
+    await  Jobs.findOne(job)
+      .then((job) => {
+        res.render("jobs/details.ejs", { job:job });
+      })
+      .catch((error) => {
+        console.log(error)
+        res.redirect('/api/v1/jobs')
+      });
+};
 
 //Get a single job with id and slug=> /api/v1/job/:id/slug
 exports.getJob=async(req,res,next)=>{
@@ -103,7 +115,7 @@ const job= await Jobs.find({ $and: [{_id:req.params.id} , {slug:req.params.slug}
         success:true,
         data:job
     })
-}
+};
 
 //Search job with radius => /api/v1/jobs/:zipcode/:distance
 exports.getJobsInRadius= async (req,res,next)=>{

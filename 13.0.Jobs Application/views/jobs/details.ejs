@@ -1,12 +1,13 @@
 <%- include('../partials/header') -%>
-    <div class="container">
-        <h1>Details for Current Company</h1>
+    <div class="container m-auto">
         <div class="row">
-            <div class="col">
-                <span><%= job.description %></span>
-                <span><%= job.email %></span>
-                <span><%= job.address %></span>
-                <span><%= job.salary %></span>
+            <div class="col-xl-8 col-md-8 col-sm-8 border text-center shadow-lg bg-light rounded m-auto">
+                <h1 class="text-dark"><%= job.title %></h1>
+                <h2 class="text-dark"><%= job.company %></h2>
+                <p class="textdark"><%= job.description %></p>
+                <p class="text-dark">Emai: <%= job.email %></p>
+                <p class="text-dark">Address: <%= job.address %></p>
+                <p class="text-dark">Salary: <%= job.salary %> $</p>
             </div>
         </div>
     </div>

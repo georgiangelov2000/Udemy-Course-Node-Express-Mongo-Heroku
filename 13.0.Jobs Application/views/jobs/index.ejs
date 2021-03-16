@@ -14,22 +14,22 @@
   <% jobs.forEach((job,index)=>{ %>
   <tbody>
     <tr>
-      <td style="width: 16.66%; vertical-align: inherit; text-align: center;"><%= job.title %></td>
-      <td style="width: 16.66%; vertical-align: inherit; text-align: center;"><%= job.company %></td>
-      <td style="width: 16.66%; vertical-align: inherit; text-align: center;"><%= job.postingDate %></td>
-      <td style="width: 16.66%; vertical-align: inherit; text-align: center;"><%= job.lastDate %></td>
+      <td style="width: 16.66%; vertical-align: inherit;"><h5> <%= job.title %> </h5> </td>
+      <td style="width: 16.66%; vertical-align: inherit;"> <h6><%= job.company %></h6 ></td>
+      <td style="width: 16.66%; vertical-align: inherit;"><h6><%= job.postingDate %></h6></td>
+      <td style="width: 16.66%; vertical-align: inherit;"><h6><%= job.lastDate %></h6></td>
       <td style="vertical-align: inherit;">
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-xl-3  col-md-3 col-sm-3 ">
             <a href="#" class="btn btn-success">Apply</a>
           </div>
-          <div class="col-md-3">
-            <a href="#" class="btn btn-primary">Details</a>
+          <div class="col-xl-3  col-md-3 col-sm-3  ">
+            <a href="/api/v1/job/details/<%= job.id %>" class="btn btn-primary">Details</a>
           </div>
-          <div class="col-md-3">
+          <div class="col-xl-3  col-md-3 col-sm-3 ">
             <a href="/api/v1/job/<%= job.id %>"  class="btn btn-dark" >Edit</a>
           </div>
-          <div class="col-md-3">
+          <div class="col-xl-3  col-md-3 col-sm-3 ">
             <form action="/api/v1/job/<%= job.id %>?_method=DELETE" method="POST">
               <div class="form-group">
                 <input type="hidden" name="_method" value="DELETE">
