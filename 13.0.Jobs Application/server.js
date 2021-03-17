@@ -2,7 +2,6 @@ const express=require('express');
 const app=express();
 const dotenv=require('dotenv');
 const jobsRouter = require('./routes/jobs');
-const userRouter=require('./routes/auth');
 const connectDatabase=require('./config/database');
 const bodyParser=require('body-parser');
 const path=require('path');
@@ -16,7 +15,6 @@ app.use(methodOverride('_method'));
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use('/api/v1',jobsRouter);
-app.use('/api/v1',userRouter)
 app.set("views", path.join(__dirname, "views"));
 app.set('view-engine','ejs');
 

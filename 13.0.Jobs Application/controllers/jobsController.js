@@ -1,6 +1,4 @@
 const Jobs=require('../models/jobs');
-const geoCoder=require('../utilities/geocoder');
-
 //render Jobs
 exports.getJobs=async (req,res,next)=>{
     
@@ -90,6 +88,7 @@ exports.deleteJob= async (req,res,next)=>{
     })
 };
 
+//Details for job /api/v1/job/:id
 exports.getDetailsForJob= async(req,res,next)=>{
     const job= { _id: req.params.id };
     await  Jobs.findOne(job)
@@ -102,6 +101,7 @@ exports.getDetailsForJob= async(req,res,next)=>{
       });
 };
 
+/*
 //Get a single job with id and slug=> /api/v1/job/:id/slug
 exports.getJob=async(req,res,next)=>{
 const job= await Jobs.find({ $and: [{_id:req.params.id} , {slug:req.params.slug}] })
@@ -116,18 +116,4 @@ const job= await Jobs.find({ $and: [{_id:req.params.id} , {slug:req.params.slug}
         data:job
     })
 };
-
-//Search job with radius => /api/v1/jobs/:zipcode/:distance
-exports.getJobsInRadius= async (req,res,next)=>{
-    const{ zipcode,distance }=req.params;
-    //Getting latitude & longtitude from getcoder with zipcode
-    const loc= await geoCoder.geocode(zipcode);
-    const latitude=loc[0].latitude;
-    const longtitude=loc[0].longitude;
-
-    const radius=distance / 3963
-
-    const jobs=  await Jobs.find({
-        location: {$geoWithin:{$centerSphere:[[longtitude,latitude],radius ]}}
-    });
-};
+*/

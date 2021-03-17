@@ -10,8 +10,6 @@ const {
     updateJob,
     deleteJob,
     getDetailsForJob
-    //getJobsInRadius,
-    //getJob,
 }=require('../controllers/jobsController');
 
 router.route('/jobs').get(getJobs);
@@ -22,6 +20,4 @@ router.route('/job/:id').get(getUpdateJob)
 router.route('/job/:id').put(updateJob)
 router.route('/job/:id').delete(deleteJob)
 
-//router.route('job/:id/:slug').get(getJob);
-//router.route('/jobs/:zipcode/:distance').get(getJobsInRadius);
 module.exports=router ;

@@ -10,19 +10,14 @@
   "author": "George Angelov",
   "license": "MIT",
   "devDependencies": {
-    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "mongoose": "^5.11.15",
-    "node-geocode": "^0.2.0",
-    "node-geocoder": "^3.27.0",
     "nodemon": "^2.0.7",
     "path": "^0.12.7",
-    "slugify": "^1.4.7",
     "validator": "^13.5.2"
   }
 }
