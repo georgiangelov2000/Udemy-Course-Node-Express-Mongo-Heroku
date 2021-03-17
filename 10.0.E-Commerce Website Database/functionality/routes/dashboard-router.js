@@ -127,14 +127,14 @@ router.post("/product/new", upload.single("imageUrl"), (req, res, next) => {
   
   let url = file.path.replace("public", "");
 
-  Product.findOne({ imageUrl: url, name:name, description:description, price:price })
+  Product.findOne({ imageUrl: url, name:name, description:description, price:price,date_added:date_added })
   .then(product => {
       if (product) {
         req.flash("error_msg", "ERROR:" + '"Duplicate Image. Try Again!');
         return res.redirect("/product/new");
       };
 
-      Product.create({ imageUrl: url, name:name,description:description,price:price,})
+      Product.create({ imageUrl: url, name:name,description:description,price:price,date_added:date_added})
       .then(product => {
         req.flash("success_msg", "Product data added to database successfully.");
         res.redirect("/dashboard");
