@@ -11,7 +11,7 @@ const {getLogin,
 
 router.route('/register',forwardAuthenticated).get(getRegister);
 router.route('/login',forwardAuthenticated).get(getLogin)
-router.route('/post').post(postRegisterForm);
+router.route('/register').post(postRegisterForm);
 router.route('/login').post(login)
 router.route('/logout').post(logout)
 module.exports=router;

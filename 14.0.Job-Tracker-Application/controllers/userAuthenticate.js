@@ -1,5 +1,5 @@
 const User = require("../model/usermodel");
-const bcrypt=require('bcryptjs');
+const bcrypt=require('bcrypt');
 const passport=require('passport');
 
 exports.getRegister = (req, res, next) => {
