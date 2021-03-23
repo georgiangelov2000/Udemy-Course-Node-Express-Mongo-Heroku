@@ -9,9 +9,11 @@ const {
     getUpdateJob,
     updateJob,
     deleteJob,
-    getDetailsForJob
+    getDetailsForJob,
+    getHomePage
 }=require('../controllers/jobsController');
 
+router.route('/').get(getHomePage);
 router.route('/jobs').get(getJobs);
 router.route('/job/new').get(getJobForm);
 router.route('/job/details/:id').get(getDetailsForJob)

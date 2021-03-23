@@ -1,5 +1,9 @@
 const Jobs=require('../models/jobs');
 //render Jobs
+exports.getHomePage=async(req,res,next)=>{
+    res.render('jobs/home-page.ejs')
+};
+
 exports.getJobs=async (req,res,next)=>{
     
      await Jobs.find()
