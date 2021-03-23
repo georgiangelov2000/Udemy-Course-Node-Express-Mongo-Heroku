@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1 Add Article 
+  form(method='POST' action='/add-article')
+    label(for='title') #{Title}
+    input(type='text' name='title')
+    label(for='body') Body
+    input(type='text' name='body')
+    input(type='submit' value='submit')

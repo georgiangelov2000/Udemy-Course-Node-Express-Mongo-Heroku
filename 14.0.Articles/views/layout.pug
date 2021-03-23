@@ -1,0 +1,35 @@
+doctype html
+head
+  head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Document
+    body
+div
+  nav
+    ul
+      li
+        a(href='/') Home
+    if user
+      li
+        a(href='/add-article') Add Article
+    if user  
+      li
+        span Hello #{user.name}
+    ul
+    if user
+      li
+        a(href='/logout') Logout
+    else  
+      li
+        a(href='/register') Register
+      li
+        a(href='/login') Login
+
+div
+  block content
+  br
+  hr
+footer 
+  p Copyright &copy; 2021
