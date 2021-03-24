@@ -1,22 +1,20 @@
 const mongoose = require("mongoose");
-const validator = require("validator");
 
 const jobsSchema = new mongoose.Schema({
   title : {
       type : String,
       required : true,
       trim : true,
-      maxlength :100
   },
   slug : String,
   description : {
       type : String,
       required :true,
-      maxlength :1000
   },
   email : {
     type : String,
-    validate :[validator.isEmail, 'Please add a valid email address.']
+    required :true,
+    trim:true
   },
   address : {
     type : String,
@@ -37,10 +35,6 @@ const jobsSchema = new mongoose.Schema({
   lastDate : {
     type : Date,
     default : new Date().setDate(new Date().getDate() + 7)
-  },
-  applicantsApplied : {
-    type : [Object],
-    select : false
   },
 });
 

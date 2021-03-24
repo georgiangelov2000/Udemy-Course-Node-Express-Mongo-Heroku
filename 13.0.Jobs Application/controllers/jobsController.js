@@ -1,16 +1,15 @@
 const Jobs=require('../models/jobs');
+
 //render Jobs
-exports.getHomePage=async(req,res,next)=>{
-    res.render('jobs/home-page.ejs')
-};
 
 exports.getJobs=async (req,res,next)=>{
     
-     await Jobs.find()
+     await Jobs.find({})
      .then((jobs)=>{
          res.render('jobs/index.ejs',{jobs:jobs})
      })
      .catch((error)=>{
+        req.flash('error_message','Error:' +error)
          res.redirect('/api/v1/jobs')
      })
 };
@@ -22,6 +21,28 @@ exports.getJobForm=(req,res,next)=>{
 
 //create a new Job api/v1/job/new
 exports.newJob=async (req,res,next)=>{
+
+    const jobs={ 
+        title:req.body.title,
+        description:req.body.description,
+        email:req.body.email,
+        address:req.body.address,
+        company:req.body.company,
+        salary:req.body.salary,
+        postingDate:req.body.postingDate,
+        lastDate:req.body.lastDate
+    };
+    Jobs.create(jobs)
+    .then((job)=>{
+        req.flash('success_message','Jobs data added to database successfully.')
+        res.redirect("/api/v1/jobs");
+    })
+    .catch((error)=>{
+        req.flash('error_message','ERROR:' + error)
+        res.redirect('/api/v1/jobs');
+    })
+
+    /*
     const jobs = await Jobs.create({
         title:req.body.title,
         description:req.body.description,
@@ -35,12 +56,14 @@ exports.newJob=async (req,res,next)=>{
     jobs
     .save(jobs)
     .then((data)=>{
-        res.redirect('/api/v1/jobs')
+        req.flash('success_message','Jobs data added to database successfully.')
+        res.redirect("/");
     })
     .catch((error)=>{
-        console.log(error)
-        res.redirect('/api/v1/jobs')
+        req.flash('error_message','ERROR:' +err)
+        res.redirect('/api/v1/jobs');
     })
+    */
 };
 
 //get updateJob => api/v1/job/:id/
@@ -51,7 +74,7 @@ exports.getUpdateJob=async (req,res,next)=>{
         res.render("jobs/edit-job.ejs", { job:job });
       })
       .catch((error) => {
-        console.log(error)
+        req.flash('error_message','Error:' +error)
         res.redirect('/api/v1/jobs')
       });
 };
@@ -71,10 +94,11 @@ exports.updateJob=async (req,res,next)=>{
         }
       })
       .then((data)=>{
+        req.flash('success_message','Job Updated successfully.')
         res.redirect('/api/v1/jobs')
       })
       .catch((error)=>{
-        console.log(error)
+        req.flash('error_message','Error:' +error)
         res.redirect('/api/v1/jobs');
       })
 };
@@ -84,10 +108,11 @@ exports.deleteJob= async (req,res,next)=>{
     const job={_id:req.params.id};
     Jobs.findByIdAndDelete(job)
     .then((job)=>{
+        req.flash('success_message','Job deleted successfully.')
         res.redirect('/api/v1/jobs')
     })
     .catch((error)=>{
-        console.log(error)
+        req.flash('error_message','Error:' +error)
         res.redirect('/api/v1/jobs')
     })
 };
