@@ -1,11 +1,13 @@
 extends layout
 
 block content
-  h1=article.title 
-  h5 Written by #{author}
-  p= article.body 
+  h1 Title : #{article.title} 
+  h5 Written by : #{author}
+  p Body : #{article.body} 
   
   if user 
     if user.id ==article.author 
-      a(href="#") Edit 
-      a(href="#") Delete
+      a(href="/articles/edit/"+article._id) Edit 
+      form(action='/articles/'+article._id + "?_method=DELETE"  method='POST')
+        input(type='hidden' name='_method' value='DELETE')
+        input(type='submit' value='delete')

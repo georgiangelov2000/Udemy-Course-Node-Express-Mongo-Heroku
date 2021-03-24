@@ -9,23 +9,9 @@ router.get('*',(req, res, next)=> {
   next();
 });
 
-router.get('/register', async (req, res) => {
-    res.render('register.pug');
+router.get('/users/register', async (req, res) => {
+    res.render('register');
   });
-
-  router.get('/login', async (req, res) => {
-    res.render('login.pug');
-  });
-
-  router.get('/layout', async (req, res) => {
-    res.render('layout');
-  });
-
-  router.get('/logout', async (req, res) => {
-    req.logout();
-    res.redirect('/login');
-  });
-
 
   router.post('/register', async (req, res) => {
     const name = req.body.name;
@@ -41,17 +27,24 @@ router.get('/register', async (req, res) => {
       password: await bcrypt.hash(req.body.password, salt)
     })
     newUser.save();
-    res.redirect('/login');
+    res.redirect('/users/login');
   })
 
+  router.get('/login', async (req, res) => {
+    res.render('login.pug');
+  });
 
   router.post('/login', async (req, res, next) => {
     passport.authenticate('local', {
       successRedirect: '/',
-      failureRedirect: '/login',
+      failureRedirect: '/users/login',
       failureFlash: true
     })(req, res, next);
   });
 
+  router.get('/logout', async (req, res) => {
+    req.logout();
+    res.redirect('/users/login');
+  });
   
   module.exports=router
