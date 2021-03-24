@@ -1,25 +1,24 @@
 {
-  "name": "articles",
+  "name": "article-app",
   "version": "1.0.0",
-  "description": "articles",
-  "main": "index.js",
+  "description": "Simple article app",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node app"
   },
-  "author": "George Angelov",
-  "license": "MIT",
-  "devDependencies": {
-    "bcrypt": "^5.0.1",
-    "bower": "^1.8.12",
+  "author": "Georgi Angelov",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "connect-flash": "^0.1.1",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "method-override": "^3.0.0",
-    "mongoose": "^5.11.15",
-    "nodemon": "^2.0.7",
-    "passport": "^0.4.1",
+    "express": "^4.15.3",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.15.3",
+    "express-validator": "^3.2.0",
+    "mongoose": "^5.7.7",
+    "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "path": "^0.12.7",
-    "pug": "^3.0.2"
+    "pug": "^2.0.0-rc.1"
   }
 }

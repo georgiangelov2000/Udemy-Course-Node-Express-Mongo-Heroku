@@ -3,8 +3,11 @@ extends layout
 block content
   h1 Login
   form(method='POST', action='/users/login')
-    label(for='username') Name
-    input(type='text' name='username')
-    label(for='password') Password
-    input(type='password' name='password')
-    input(type='submit' value='submit')
+    #form-group
+      label Username:
+      input.form-control(name='username',type='text')
+    #form-group
+      label Password:
+      input.form-control(name='password',type='password')
+    br
+    input.btn.btn-primary(type='submit',value='Submit')
