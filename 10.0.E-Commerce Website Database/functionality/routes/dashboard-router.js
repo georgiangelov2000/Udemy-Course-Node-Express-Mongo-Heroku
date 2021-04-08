@@ -1,36 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/productmodel");
-const multer=require('multer');
-const path=require('path');
-const authenticate = require("passport-local-mongoose/lib/authenticate");
 
-//Set Image Storage
-let storage = multer.diskStorage({
-  destination: "./public/uploads/images/",
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-
-let upload = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    checkFileType(file, cb);
-  },
-});
-
-//check File
-function checkFileType(file, cb) {
-  const fileTypes = /jpeg|jpg|png|gif/;
-  const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
-  
-  if (extName) {
-    return cb(null, true);
-  } else {
-    cb("Error:Please images only.");
-  };
-};
 
 // Checks if user is authenticated
 function isAuthenticatedUser(req, res, next) {
@@ -82,7 +53,20 @@ router.get("/product/update/:id", isAuthenticatedUser, (req, res) => {
     });
 });
 
-//
+//Get Details for Product
+router.get("/product/details/:id",(req, res) => {
+  const searchQuery = { _id: req.params.id };
+  Product.findOne(searchQuery)
+    .then((product) => {
+      res.render("admin-dashboard/details", { product: product });
+    })
+    .catch((error) => {
+      req.flash("error_msg", "ERROR:" + error);
+      res.redirect("/dashboard");
+    });
+});
+
+//get Search
 router.get('/search/product',isAuthenticatedUser,(req,res)=>{
   res.render('admin-dashboard/search',{product: ""});
 })
@@ -115,38 +99,49 @@ router.get("/products/myproducts", (req, res) => {
   res.render("admin-dashboard/admin-products/myproducts");
 });
 
-//Post Routes
-router.post("/product/new", upload.single("imageUrl"), (req, res, next) => {
-  const file = req.file;
-  const name=req.body.name;
-  const description=req.body.description;
-  const price=req.body.price;
-  if (!file) {
-    return console.log("Please select an Image.");
+router.post('/product/new',(req,res,next)=>{
+  const newProduct={
+    imageUrl:req.body.imageUrl,
+    name:req.body.name,
+    description:req.body.description,
+    price:req.body.price,
+    author: req.user._id,
   }
-  
-  let url = file.path.replace("public", "");
+  Product.create(newProduct)
+  .then((product)=>{
+    req.flash("success_msg", "Product data added to database successfully.");
+    res.redirect("/dashboard");
+  })
+  .catch((error)=>{
+    req.flash("error_msg", "Error:" + error);
+    res.redirect("/product/new");
+  })
+})
 
-  Product.findOne({ imageUrl: url, name:name, description:description, price:price,date_added:date_added })
-  .then(product => {
-      if (product) {
-        req.flash("error_msg", "ERROR:" + '"Duplicate Image. Try Again!');
-        return res.redirect("/product/new");
-      };
 
-      Product.create({ imageUrl: url, name:name,description:description,price:price,date_added:date_added})
-      .then(product => {
-        req.flash("success_msg", "Product data added to database successfully.");
-        res.redirect("/dashboard");
-      })
+router.put("/product/update/:id", (req, res) => {
+  const searchQuery = { _id: req.params.id };
+
+  Product.updateOne(searchQuery, {
+    $set: {
+      imageUrl:req.body.imageUrl,
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+    },
+  })
+    .then((product) => {
+      req.flash("success_msg", "Product data updated successfully");
+      res.redirect("/dashboard");
     })
-    .catch((err) => {
-      req.flash("error_msg", "Error:" + error);
-      res.redirect("/product/new");
+    .catch((error) => {
+      req.flash("error_msg", "ERROR:" + error);
+      res.redirect("/dashboard");
     });
 });
 
 
+/*
 router.put('/product/update/:id',isAuthenticatedUser,upload.single('imageUrl'),(req,res)=>{
   const searchquery={_id:req.params.id};
 
@@ -178,29 +173,7 @@ router.put('/product/update/:id',isAuthenticatedUser,upload.single('imageUrl'),(
   res.redirect("/dashboard");
 });
 })
-
-/*
-router.put("/product/update/:id", (req, res) => {
-  const searchQuery = { _id: req.params.id };
-
-  Product.updateOne(searchQuery, {
-    $set: {
-      imageUrl: req.body.imageUrl,
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-    },
-  })
-    .then((product) => {
-      req.flash("success_msg", "Product data updated successfully");
-      res.redirect("/dashboard");
-    })
-    .catch((error) => {
-      req.flash("error_msg", "ERROR:" + error);
-      res.redirect("/dashboard");
-    });
-});
-*/
+*/ 
 
 router.delete("/product/delete/:id", (req, res) => {
   const id = { _id: req.params.id };

@@ -9,8 +9,8 @@
             <tr>
               <th scope="col">Image</th>
               <th scope="col">Name</th>
-              <th scope="col">Description</th>
-              <th scope="col">Price</th>
+              <th scope="col">Author-Id</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <% products.forEach((product)=>{ %>
@@ -24,9 +24,10 @@
                 />
                 </td>
                 <td><%= product.name %></td>
-                <td><%= product.description %></td>
-                <td><%= product.price %> $</td>
-                <td><%= date_added %></td>
+                <td><%= product.author %></td>
+                <td>
+                  <a href="/product/details/<%= product.id %>" class="btn btn-dark stretched-link">Details</a>
+                </td>
               </tr>
             </tbody>
          <%  }) %>

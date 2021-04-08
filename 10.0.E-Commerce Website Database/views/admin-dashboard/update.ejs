@@ -5,10 +5,10 @@
   <h1 class="text-center">Update Product</h1>
 <div class="custom-file">
   <form class="form-control" action="/product/update/<%= product.id %>?_method=PUT" method="POST" >
-
-  <input value="<%= product.imageUrl %>" name="imageUrl" type="file" class="custom-file-input"">
-  <label class=" custom-file-label" for="customFile">Choose Image</label>
-
+  <div class="form-group">
+    <label for="imageUrl">Image Url</label>
+    <input value="<%= product.imageUrl %>" type="text" class="form-control" id="imageUrl"  name="imageUrl" placeholder="Enter imageUrl">
+  </div>
   <div class="form-group">
     <label for="name">Name</label>
     <input value="<%= product.name %>" type="text" class="form-control" id="name"  name="name" placeholder="Enter name">

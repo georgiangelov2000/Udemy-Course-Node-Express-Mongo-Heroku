@@ -1,11 +1,17 @@
 .img-fluid{
-    height: 100px;
+    height: 50px;
 }
 .table td, .table th {
 vertical-align: baseline;
 text-align: center;
 }
 
-.table-hover td{
-    width: 16.66%
-} 
+.footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color:gray;
+    color: white;
+    text-align: center;
+}

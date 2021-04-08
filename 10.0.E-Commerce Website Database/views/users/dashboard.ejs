@@ -3,24 +3,15 @@
   <%- include('../partials/messages') -%>
 
   <h2 class="text-center text-danger">Admin Dashboard</h2>
-  
-  <div class="row mb-5">
-    <div class="col-xl-12 col-sm-12">
-      <div class="cart-body text-white p-3 bg-primary text-center rounded">
-        Total Products <%= products.length %>
-      </div>
-    </div>
-  </div>
 
   <div class="row">
-
     <div class="col-xl-2 col-sm-2">
       <%- include('../partials/sidebar') -%>
     </div>
 
     <div class="col-xl-10 col-sm-10 d-flex flex-wrap flex-wrap align-items-center mb-5">
       <table
-        class="table table-bordered"
+        class="table table-hover"
         id="dataTable"
         cellspacing="0"
       >
@@ -28,33 +19,37 @@
           <tr>
             <th>Image</th>
             <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tfoot>
           <tr>
             <th>Image</th>
             <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
+            <th>Actions</th>
           </tr>
         </tfoot>
 
         <tbody>
           <% products.forEach((product)=>{ %>
-          <tr>
-            <td class="text-center">
-              <img
-                src="<%= product.imageUrl %>"
-                class="img-fluid w-10"
-                alt="Responsive image"
-              />
-            </td>
-            <td class=" text-center" ><%= product.name %></td>
-            <td class=" text-center" ><%= product.price %> $</td>
-            <td class=" text-center" ><%= product.description %></td>
-          </tr>
+            <% if(currentUser.id==product.author) { %>
+              <tr>
+                <td class="text-center">
+                  <img
+                    src="<%= product.imageUrl %>"
+                    class="img-fluid w-10"
+                    alt="Responsive image"
+                  />
+                </td>
+                <td class=" text-center" ><%= product.name %></td>
+                <td>
+                  <a href="/product/details/<%= product.id %>" class="btn btn-dark stretched-link">Details</a>
+                </td>
+              </tr>
+           <% } else { %>
+
+           <% } %>
+         
           <% }) %>
         </tbody>
       </table>

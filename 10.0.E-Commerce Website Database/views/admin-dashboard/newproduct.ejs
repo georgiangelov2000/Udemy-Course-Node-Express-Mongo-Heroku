@@ -4,10 +4,11 @@
   <%- include('../partials/messages') -%>
   <h1 class="text-center">New Product</h1>
 <div class="custom-file">
-  <form class="form-control" action="/product/new" enctype="multipart/form-data" method="POST"  >
-
-  <input name="imageUrl" type="file" class="custom-file-input"">
-  <label class=" custom-file-label" for="customFile">Choose Image</label>
+  <form class="form-control" action="/product/new" method="POST"  >
+    <div class="form-group">
+      <label for="imageUrl">Image Url</label>
+      <input type="text" class="form-control" id="imageUrl"  name="imageUrl" placeholder="Enter imageUrl">
+    </div>
   <div class="form-group">
     <label for="name">Name</label>
     <input type="text" class="form-control" id="name"  name="name" placeholder="Enter name">
